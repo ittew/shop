@@ -2,7 +2,7 @@
 <div class="good">
   <!-- 轮播 -->
   <div class="swiper">
-    <swiper class="swiper-container" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
+    <swiper class="swiper-container" indicator-dots="true" autoplay="true" interval="3000" duration="500" circular="true">
       <block v-for="(item, index) in gallery " :key="index">
         <swiper-item class="swiper-item">
           <image :src="item.img_url" class="slide-image" />
@@ -22,10 +22,8 @@
     </div>
   </div>
   <!-- 商品详情 -->
-  <div class="detail-list">
-    <div class="detail" v-for="(v,i) in detailList" :key="i">
-      <img :src="v.list_pic_url">
-    </div>
+  <div class="detail" v-for="(v,i) in detailList" :key="i">
+    <img :src="v.list_pic_url">
   </div>
 
   <!-- 底部按钮 -->
@@ -129,10 +127,8 @@ methods: {
         });
         return false;
       }
-      wx.showToast({
-        title: "跳转到订单列表",
-        icon: "success",
-        duration: 1500
+      wx.navigateTo({
+        url: "/pages/order/main"
       });
       this.showpop = false
       // console.log(this.goodsId);
@@ -186,19 +182,10 @@ methods: {
   },
   // 跳转到购物车列表
   toCart() {
-    // wx.switchTab({
-    //   url: "/pages/cart/main"
-    // });
-
-    wx.showToast({
-      title: "跳转到购物车列表",
-      icon: "success",
-      duration: 1500
+    wx.switchTab({
+      url: "/pages/cart/main"
     });
     this.showpop = false
-    // wx.navigateTo({
-    //   url: "/pages/cart/main"
-    // });
   },
   // 关闭购物车弹框
   showType() {
@@ -283,11 +270,8 @@ margin-bottom: 20rpx;
   }
 }
 }
-// 商品详情
-.detail-list {
-  margin-bottom: 120rpx;
-}
 .detail {
+  padding-bottom: 120rpx;
   img {
     width: 100%;
     height: 534rpx;
