@@ -23,6 +23,11 @@
       "pagePath": "pages/index/main",
       "iconPath": "static/tabs/home.png",
       "selectedIconPath": "static/tabs/home-active.png"
+    },{
+      "text": "分类",
+      "pagePath": "pages/category/main",
+      "iconPath": "static/tabs/category.png",
+      "selectedIconPath": "static/tabs/category_active.png"
     }, {
       "text": "购物车",
       "pagePath": "pages/cart/main",

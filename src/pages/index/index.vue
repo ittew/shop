@@ -48,35 +48,35 @@ export default {
       ],
       iconList: [
         {
-          url:'http://m.360buyimg.com/mobilecms/s120x120_jfs/t1/84753/1/16651/5549/5e7d5f9eE492c3864/4b9963fe16fae211.png.webp',
+          url:'/static/images/user.png',
           name: '超市'
         },
         {
-          url:'http://m.360buyimg.com/mobilecms/s120x120_jfs/t1/84753/1/16651/5549/5e7d5f9eE492c3864/4b9963fe16fae211.png.webp',
+          url:'/static/images/user.png',
           name: '超市'
         },
         {
-          url:'http://m.360buyimg.com/mobilecms/s120x120_jfs/t1/84753/1/16651/5549/5e7d5f9eE492c3864/4b9963fe16fae211.png.webp',
+          url:'/static/images/user.png',
           name: '超市'
         },
         {
-          url:'http://m.360buyimg.com/mobilecms/s120x120_jfs/t1/84753/1/16651/5549/5e7d5f9eE492c3864/4b9963fe16fae211.png.webp',
+          url:'/static/images/user.png',
           name: '超市'
         },
         {
-          url:'http://m.360buyimg.com/mobilecms/s120x120_jfs/t1/84753/1/16651/5549/5e7d5f9eE492c3864/4b9963fe16fae211.png.webp',
+          url:'/static/images/user.png',
           name: '超市'
         },
         {
-          url:'http://m.360buyimg.com/mobilecms/s120x120_jfs/t1/84753/1/16651/5549/5e7d5f9eE492c3864/4b9963fe16fae211.png.webp',
+          url:'/static/images/user.png',
           name: '超市'
         },
         {
-          url:'http://m.360buyimg.com/mobilecms/s120x120_jfs/t1/84753/1/16651/5549/5e7d5f9eE492c3864/4b9963fe16fae211.png.webp',
+          url:'/static/images/user.png',
           name: '超市'
         },
         {
-          url:'http://m.360buyimg.com/mobilecms/s120x120_jfs/t1/84753/1/16651/5549/5e7d5f9eE492c3864/4b9963fe16fae211.png.webp',
+          url:'/static/images/user.png',
           name: '超市'
         }
       ],
@@ -207,27 +207,27 @@ export default {
       width: 25%;
       text-align: center;
       img {
-        padding: 15rpx 0;
+        margin: 15rpx 0;
         height: 100rpx;
         width: 100rpx;
         display: inline-block;
       }
       p {
         line-height: 1;
-        font-size: 24rpx;
+        font-size: 30rpx;
         margin-bottom: 15rpx;
       }
     }
   }
   // 商品列表
   .contentList{
-    padding: 0 20rpx 20rpx;
+    padding: 10rpx 20rpx 20rpx;
     background: #ffffff;
   }
   .barTitle {
     width: 100%;
     height: 56rpx;
-    padding-top: 20rpx;
+    margin-top: 20rpx;
     text-align: center;
   }
   .Title-left {
@@ -253,11 +253,11 @@ export default {
     display: flex;
     flex-wrap: wrap;
     div {
+      width: 32%;
+      margin-right:1%;
       box-sizing: border-box;
       margin-top: 20rpx;
       padding: 10px 0;
-      width: 32%;
-      margin-right: 1.2%;
       background: #fff;
       margin-bottom: 10rpx;
       padding-bottom: 10rpx;
