@@ -22,9 +22,12 @@
     </div>
   </div>
   <!-- 商品详情 -->
-  <div class="detail" v-for="(v,i) in detailList" :key="i">
-    <img :src="v.list_pic_url">
+  <div class="detail-list">
+    <div class="detail" v-for="(v,i) in detailList" :key="i">
+      <img :src="v.list_pic_url">
+    </div>
   </div>
+
   <!-- 底部按钮 -->
   <div class="bottom-fixed">
     <div @click="toCart">
@@ -281,61 +284,64 @@ margin-bottom: 20rpx;
 }
 }
 // 商品详情
-.detail {
-img {
-  width: 100%;
-  height: 534rpx;
+.detail-list {
+  margin-bottom: 120rpx;
 }
+.detail {
+  img {
+    width: 100%;
+    height: 534rpx;
+  }
 }
 // 底部按钮
 .bottom-fixed {
-position: fixed;
-bottom: 0;
-left: 0;
-right: 0;
-width: 750rpx;
-height: 100rpx;
-display: flex;
-background: #fff;
-z-index: 10;
-
-div:nth-child(1) {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 750rpx;
   height: 100rpx;
-  width: 162rpx;
-  border: 1rpx solid #f4f4f4;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  background: #fff;
+  z-index: 10;
 
-  .car {
-    position: relative;
-    height: 60rpx;
-    width: 60rpx;
+  div:nth-child(1) {
+    height: 100rpx;
+    width: 162rpx;
+    border: 1rpx solid #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    span {
-      height: 28rpx;
-      width: 28rpx;
-      z-index: 10;
-      position: absolute;
-      top: 0;
-      right: 0;
-      background: #b4282d;
-      text-align: center;
-      font-size: 18rpx;
-      color: #fff;
-      line-height: 28rpx;
-      border-radius: 50%;
+    .car {
+      position: relative;
+      height: 60rpx;
+      width: 60rpx;
+
+      span {
+        height: 28rpx;
+        width: 28rpx;
+        z-index: 10;
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: #b4282d;
+        text-align: center;
+        font-size: 18rpx;
+        color: #fff;
+        line-height: 28rpx;
+        border-radius: 50%;
+      }
+
+      img {
+        display: block;
+        height: 44rpx;
+        width: 44rpx;
+        position: absolute;
+        top: 10rpx;
+        left: 0;
+      }
     }
-
-    img {
-      display: block;
-      height: 44rpx;
-      width: 44rpx;
-      position: absolute;
-      top: 10rpx;
-      left: 0;
-    }
-  }
 }
 
 div:nth-child(2) {
