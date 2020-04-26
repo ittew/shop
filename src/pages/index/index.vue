@@ -1,126 +1,293 @@
 <template>
-  <div @click="clickHandle">
-
-    <div class="userinfo" @click="bindViewTap">
-      <img class="userinfo-avatar" v-if="userInfo.avatarUrl" :src="userInfo.avatarUrl" background-size="cover" />
-      <img class="userinfo-avatar" src="/static/images/user.png" background-size="cover" />
-
-      <div class="userinfo-nickname">
-        <card :text="userInfo.nickName"></card>
+  <div class="index">
+    <!-- 轮播图 -->
+    <div class="swiper">
+      <swiper class="swiper-container" indicator-dots="true" autoplay="true" interval="3000" circular="true" duration="500">
+        <block v-for="(item, index) in banner " :key="index">
+          <swiper-item class="swiper-item">
+            <image :src="item" class="slide-image" />
+          </swiper-item>
+        </block>
+      </swiper>
+    </div>
+    <!-- icon -->
+    <div class="icon grayLine">
+      <div @click="categoryList(item.id)" v-for="(item, index) in iconList" :key="index">
+        <img :src="item.url" alt="">
+        <p>{{item.name}}</p>
       </div>
     </div>
-
-    <div class="usermotto">
-      <div class="user-motto">
-        <card :text="motto"></card>
+    <!-- 商品内容 -->
+    <div class="contentList grayLine" v-for="(v,i) in content" :key="i">
+      <div class="barTitle">
+        <div class="Title-left">{{v.title}}</div>
+        <div class="Title-right" @tap="gotoList">查看全部<span class="icon-right"></span></div>
       </div>
-    </div>
-
-    <form class="form-container">
-      <input type="text" class="form-control" :value="motto" placeholder="v-model" />
-      <input type="text" class="form-control" v-model="motto" placeholder="v-model" />
-      <input type="text" class="form-control" v-model.lazy="motto" placeholder="v-model.lazy" />
-    </form>
-
-    <a href="/pages/counter/main" class="counter">去往Vuex示例页面</a>
-
-    <div class="all">
-        <div class="left">
+      <div class="sublist">
+        <div v-for="(subitem, subindex) in v.goodsList" :key="subindex">
+          <img :src="subitem.url" alt="">
+          <p>{{subitem.name}}</p>
+          <p>￥{{subitem.retail_price}}</p>
         </div>
-        <div class="right">
-        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import card from '@/components/card'
-
 export default {
   data () {
     return {
-      motto: 'Hello miniprograme',
-      userInfo: {
-        nickName: 'mpvue',
-        avatarUrl: 'http://mpvue.com/assets/logo.png'
-      }
+      banner: [
+        '/static/images/index/ad1.jpg',
+        '/static/images/index/ad2.jpg',
+        '/static/images/index/ad3.jpg',
+        '/static/images/index/ad4.jpg',
+        '/static/images/index/ad5.jpg',
+        '/static/images/index/ad6.jpg'
+      ],
+      iconList: [
+        {
+          url:'http://m.360buyimg.com/mobilecms/s120x120_jfs/t1/84753/1/16651/5549/5e7d5f9eE492c3864/4b9963fe16fae211.png.webp',
+          name: '超市'
+        },
+        {
+          url:'http://m.360buyimg.com/mobilecms/s120x120_jfs/t1/84753/1/16651/5549/5e7d5f9eE492c3864/4b9963fe16fae211.png.webp',
+          name: '超市'
+        },
+        {
+          url:'http://m.360buyimg.com/mobilecms/s120x120_jfs/t1/84753/1/16651/5549/5e7d5f9eE492c3864/4b9963fe16fae211.png.webp',
+          name: '超市'
+        },
+        {
+          url:'http://m.360buyimg.com/mobilecms/s120x120_jfs/t1/84753/1/16651/5549/5e7d5f9eE492c3864/4b9963fe16fae211.png.webp',
+          name: '超市'
+        },
+        {
+          url:'http://m.360buyimg.com/mobilecms/s120x120_jfs/t1/84753/1/16651/5549/5e7d5f9eE492c3864/4b9963fe16fae211.png.webp',
+          name: '超市'
+        },
+        {
+          url:'http://m.360buyimg.com/mobilecms/s120x120_jfs/t1/84753/1/16651/5549/5e7d5f9eE492c3864/4b9963fe16fae211.png.webp',
+          name: '超市'
+        },
+        {
+          url:'http://m.360buyimg.com/mobilecms/s120x120_jfs/t1/84753/1/16651/5549/5e7d5f9eE492c3864/4b9963fe16fae211.png.webp',
+          name: '超市'
+        },
+        {
+          url:'http://m.360buyimg.com/mobilecms/s120x120_jfs/t1/84753/1/16651/5549/5e7d5f9eE492c3864/4b9963fe16fae211.png.webp',
+          name: '超市'
+        }
+      ],
+      content: [
+        {
+          title: '新品',
+          goodsList: [
+            {
+              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
+              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              retail_price:'59'
+            },{
+              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
+              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              retail_price:'59'
+            },{
+              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
+              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              retail_price:'59'
+            },{
+              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
+              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              retail_price:'59'
+            },{
+              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
+              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              retail_price:'59'
+            }
+          ]
+        },
+        {
+          title: '新品',
+          goodsList: [
+            {
+              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
+              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              retail_price:'59'
+            },{
+              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
+              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              retail_price:'59'
+            },{
+              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
+              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              retail_price:'59'
+            },{
+              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
+              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              retail_price:'59'
+            },{
+              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
+              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              retail_price:'59'
+            }
+          ]
+        },{
+          title: '新品',
+          goodsList: [
+            {
+              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
+              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              retail_price:'59'
+            },{
+              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
+              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              retail_price:'59'
+            },{
+              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
+              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              retail_price:'59'
+            },{
+              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
+              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              retail_price:'59'
+            },{
+              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
+              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              retail_price:'59'
+            }
+          ]
+        }
+      ]
     }
   },
 
-  components: {
-    card
-  },
+  components: {},
 
   methods: {
-    bindViewTap () {
-      const url = '../logs/main'
-      if (mpvuePlatform === 'wx') {
-        mpvue.switchTab({ url })
-      } else {
-        mpvue.navigateTo({ url })
-      }
-    },
-    clickHandle (ev) {
-      console.log('clickHandle:', ev)
-      // throw {message: 'custom test'}
-    }
-  },
-
-  created () {
-    // let app = getApp()
+    gotoList() {}
   }
 }
 </script>
 
-<style scoped>
-.userinfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+<style lang="scss">
+  page {
+    background: #f4f4f4;
+    height: 100%;
+  }
+  // 轮播
+  .swiper {
+    width: 100%;
+    height: 417rpx;
+    .swiper-container {
+      width: 100%;
+      height: 100%;
 
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
-}
+      .swiper-item {
+        width: 100%;
+        height: 100%;
 
-.userinfo-nickname {
-  color: #aaa;
-}
+        .slide-image {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+  .grayLine {
+    margin: 20rpx 0;
+  }
+  // icon
+  .icon {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10rpx 0;
+    background: #ffffff;
+    div {
+      width: 25%;
+      text-align: center;
+      img {
+        padding: 15rpx 0;
+        height: 100rpx;
+        width: 100rpx;
+        display: inline-block;
+      }
+      p {
+        line-height: 1;
+        font-size: 24rpx;
+        margin-bottom: 15rpx;
+      }
+    }
+  }
+  // 商品列表
+  .contentList{
+    padding: 0 20rpx 20rpx;
+    background: #ffffff;
+  }
+  .barTitle {
+    width: 100%;
+    height: 56rpx;
+    padding-top: 20rpx;
+    text-align: center;
+  }
+  .Title-left {
+    float: left;
+    font-size: 37rpx;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 800;
+    color: #333;
+  }
 
-.usermotto {
-  margin-top: 150px;
-}
+  .Title-right {
+    float: right;
+    font-size: 26rpx;
+    color: #aaa;
 
-.form-control {
-  display: block;
-  padding: 0 12px;
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
-}
-.all{
-  width:7.5rem;
-  height:1rem;
-  background-color:blue;
-}
-.all:after{
-  display:block;
-  content:'';
-  clear:both;
-}
-.left{
-  float:left;
-  width:3rem;
-  height:1rem;
-  background-color:red;
-}
+  }
+  .icon-right {
+    // background: url("") no-repeat center center;
+    background-size: 64rpx 64rpx;
+  }
+  // 商品样式
+  .sublist {
+    display: flex;
+    flex-wrap: wrap;
+    div {
+      box-sizing: border-box;
+      margin-top: 20rpx;
+      padding: 10px 0;
+      width: 32%;
+      margin-right: 1.2%;
+      background: #fff;
+      margin-bottom: 10rpx;
+      padding-bottom: 10rpx;
+      border: 2rpx solid #eee;
+      img {
+        display: block;
+        width: 200rpx;
+        height: 180rpx;
+        margin: 0 auto;
+      }
 
-.right{
-  float:left;
-  width:4.5rem;
-  height:1rem;
-  background-color:green;
-}
+      p {
+        margin-bottom: 5rpx;
+        text-indent: 1em;
+        font-size: 32rpx;
+      }
+
+      p:nth-child(2) {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 98%;
+        padding: 10px 0;
+        line-height: 1;
+      }
+
+      p:nth-child(3) {
+        color: #9c3232;
+      }
+    }
+
+  }
 </style>
