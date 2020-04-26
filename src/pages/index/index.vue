@@ -24,7 +24,7 @@
         <div class="Title-right" @tap="gotoList">查看全部<span class="icon-right"></span></div>
       </div>
       <div class="sublist">
-        <div v-for="(subitem, subindex) in v.goodsList" :key="subindex">
+        <div v-for="(subitem, subindex) in v.goodsList" :key="subindex" @click="jumpDetail">
           <img :src="subitem.url" alt="">
           <p>{{subitem.name}}</p>
           <p>￥{{subitem.retail_price}}</p>
@@ -165,7 +165,13 @@ export default {
   components: {},
 
   methods: {
-    gotoList() {}
+    gotoList() {},
+    // 跳转到商品详情
+    jumpDetail() {
+      wx.navigateTo({
+        url: '/pages/good/main'
+      })
+    }
   }
 }
 </script>

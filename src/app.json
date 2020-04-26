@@ -1,6 +1,9 @@
 {
   "pages": [
     "pages/index/main",
+    "pages/address/main",
+    "pages/addAddress/main",
+    "pages/good/main",
     "pages/category/main",
     "pages/logs/main",
     "pages/cart/main",

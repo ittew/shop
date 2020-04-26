@@ -63,7 +63,7 @@ export default {
       this.detailData.forEach(v => {
         v.name--
       });
-      console.log(this.detailData)
+      // console.log(this.detailData)
       // const data = await get("/category/currentaction", {
       //   id: id
       // });
