@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/main",
+    "pages/couponList/main",
     "pages/my/main",
     "pages/order/main",
     "pages/address/main",
