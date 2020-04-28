@@ -36,7 +36,7 @@
         listData: [{
             title: "我的订单",
             icon: "/static/images/collect.png",
-            url: ""
+            url: "/pages/orderList/main"
           },
           {
             title: "优惠券",
