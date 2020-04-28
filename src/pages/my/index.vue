@@ -41,7 +41,7 @@
           {
             title: "优惠券",
             icon: "/static/images/collect.png",
-            url: ""
+            url: "/pages/couponList/main"
           },
           {
             title: "我的足迹",

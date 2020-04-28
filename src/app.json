@@ -1,8 +1,9 @@
 {
   "pages": [
     "pages/index/main",
-    "pages/orderDetail/main",
+    "pages/couponList/main",
     "pages/orderList/main",
+    "pages/orderDetail/main",
     "pages/my/main",
     "pages/order/main",
     "pages/address/main",
