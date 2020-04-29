@@ -246,8 +246,7 @@ background: #fff;
 margin-bottom: 20rpx;
 
 .head {
-  font-size: 38rpx;
-  padding: 20rpx 0;
+  font-size: 32rpx;
 }
 
 .item {
