@@ -28,7 +28,7 @@
 
   <!-- 底部按钮 -->
   <div class="bottom-fixed">
-    <div @click="toCart">
+    <div class="cart-list" @click="toCart">
       <div class="car">
         <span>
           {{allnumber}}
@@ -287,15 +287,15 @@ margin-bottom: 20rpx;
   display: flex;
   background: #fff;
   z-index: 10;
-
+  .cart-list {
+    border: 1rpx solid #f4f4f4;
+  }
   div:nth-child(1) {
     height: 100rpx;
     width: 162rpx;
-    border: 1rpx solid #f4f4f4;
     display: flex;
     align-items: center;
     justify-content: center;
-
     .car {
       position: relative;
       height: 60rpx;

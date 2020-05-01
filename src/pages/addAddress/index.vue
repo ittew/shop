@@ -115,7 +115,7 @@ export default {
     }
   }
   .itemend {
-    margin-top: 40rpx;
+    margin-top: 15rpx;
     display: flex;
     justify-content: space-between;
     border: none;

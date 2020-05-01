@@ -49,7 +49,7 @@ page {
     width: 700rpx;
     height: 178rpx;
     display: flex;
-    margin: 30rpx auto;
+    margin: 20rpx auto;
     .left {
       width: 500rpx;
       background:#fff;
