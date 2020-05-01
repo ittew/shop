@@ -3,7 +3,7 @@
     <!-- 轮播图 -->
     <div class="swiper">
       <swiper class="swiper-container" @change="swiperChange" autoplay="true" interval="3000" circular="true" duration="500">
-        <block v-for="(item, index) in banner " :key="index" >
+        <block v-for="(item, index) in banner" :key="index" >
           <swiper-item class="swiper-item">
             <image :src="item" class="slide-image" />
           </swiper-item>
@@ -11,7 +11,7 @@
       </swiper>
       <div class="dots">
         <div v-for="(v,i) in banner" :key="i">
-          <div class="dotsItem" :class="i == swiperCurrent ? 'dotActive' : ''"></div>
+          <div class="dotsItem" :class="i == swiperCurrent ? ' dotActive' : ''"></div>
         </div>
       </div>
     </div>
@@ -91,75 +91,117 @@ export default {
           title: '新品',
           goodsList: [
             {
-              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
-              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              url:'http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg',
+              name:'惠普（HP）CH563Z 802 黑色墨盒',
               retail_price:'59'
             },{
-              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
-              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              url:'http://www.sbn.shop/images/201908/thumb_img/10772_thumb_G_1564595802738.jpg',
+              name:'扬帆耐立打印机碳粉YFHC',
               retail_price:'59'
             },{
-              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
-              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
-              retail_price:'59'
-            },{
-              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
-              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
-              retail_price:'59'
-            },{
-              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
-              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              url:'http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg',
+              name:'惠普（HP）CH563Z 802 黑色墨盒',
               retail_price:'59'
             }
           ]
         },
         {
-          title: '新品',
+          title: '推荐',
           goodsList: [
-            {
-              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
-              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+             {
+              url:'http://www.sbn.shop/images/201812/thumb_img/10655_thumb_G_1544730403475.jpg',
+              name:'晨光签字笔12支',
               retail_price:'59'
             },{
-              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
-              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              url:'http://www.sbn.shop/images/201801/thumb_img/4462_thumb_G_1515625311762.jpg',
+              name:'得力9375薄型复写纸(蓝)(25.5*18.5cm)-16K',
               retail_price:'59'
             },{
-              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
-              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
-              retail_price:'59'
-            },{
-              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
-              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
-              retail_price:'59'
-            },{
-              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
-              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              url:'http://www.sbn.shop/images/201812/thumb_img/10655_thumb_G_1544730403475.jpg',
+              name:'晨光签字笔12支',
               retail_price:'59'
             }
           ]
         },{
-          title: '新品',
+          title: '办公用品',
           goodsList: [
             {
-              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
-              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              url:'http://www.sbn.shop/images/201801/thumb_img/4860_thumb_G_1515966007157.jpg',
+              name:'得力9844四联文件框(蓝) 12只装',
               retail_price:'59'
             },{
-              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
-              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              url:'http://www.sbn.shop/images/201801/thumb_img/4874_thumb_G_1515967770959.jpg',
+              name:'得力8854文件柜带锁(浅灰)',
               retail_price:'59'
             },{
-              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
-              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              url:'http://www.sbn.shop/images/201801/thumb_img/4860_thumb_G_1515966007157.jpg',
+              name:'得力9844四联文件框(蓝) 12只装',
               retail_price:'59'
             },{
-              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
-              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              url:'http://www.sbn.shop/images/201801/thumb_img/4874_thumb_G_1515967770959.jpg',
+              name:'得力8854文件柜带锁(浅灰)',
               retail_price:'59'
             },{
-              url:'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3437797963,2700442249&fm=26&gp=0.jpg',
-              name:'老酒纯粮原浆贵州茅台镇酱香型白酒53度纯粮食老酒500ML*1瓶装',
+              url:'http://www.sbn.shop/images/201801/thumb_img/4860_thumb_G_1515966007157.jpg',
+              name:'得力9844四联文件框(蓝) 12只装',
+              retail_price:'59'
+            },{
+              url:'http://www.sbn.shop/images/201801/thumb_img/4874_thumb_G_1515967770959.jpg',
+              name:'得力8854文件柜带锁(浅灰)',
+              retail_price:'59'
+            }
+          ]
+        },{
+          title: '电子数码',
+          goodsList: [
+            {
+              url:'http://www.sbn.shop/images/201807/thumb_img/9578_thumb_G_1530731976148.jpg',
+              name:'宏碁（Acer）TMP249 14英寸便携商务办公高清手提电脑',
+              retail_price:'59'
+            },{
+              url:'http://www.sbn.shop/images/201812/thumb_img/10635_thumb_G_1544125488377.jpg',
+              name:'爱普生长焦投影机教学会议型CB-2042',
+              retail_price:'59'
+            },{
+              url:'http://www.sbn.shop/images/201807/thumb_img/9578_thumb_G_1530731976148.jpg',
+              name:'宏碁（Acer）TMP249 14英寸便携商务办公高清手提电脑',
+              retail_price:'59'
+            },{
+              url:'http://www.sbn.shop/images/201812/thumb_img/10635_thumb_G_1544125488377.jpg',
+              name:'爱普生长焦投影机教学会议型CB-2042',
+              retail_price:'59'
+            }, {
+              url:'http://www.sbn.shop/images/201807/thumb_img/9578_thumb_G_1530731976148.jpg',
+              name:'宏碁（Acer）TMP249 14英寸便携商务办公高清手提电脑',
+              retail_price:'59'
+            }
+          ]
+        },{
+          title: '生活用品',
+          goodsList: [
+            {
+              url:'http://www.sbn.shop/images/201801/thumb_img/4611_thumb_G_1515696301432.jpg',
+              name:'德国爱慕莎(emsa)冰凌缤纷系列 进口玻璃保冷壶冷水壶1L 绿色',
+              retail_price:'59'
+            },{
+              url:'http://www.sbn.shop/images/201801/thumb_img/4927_thumb_G_1516303472078.jpg',
+              name:'膳魔师（THERMOS）儿童保温杯 吸管杯小孩学饮杯婴儿训练杯宝宝便携防漏不锈钢水杯',
+              retail_price:'59'
+            },{
+              url:'http://www.sbn.shop/images/201801/thumb_img/4611_thumb_G_1515696301432.jpg',
+              name:'德国爱慕莎(emsa)冰凌缤纷系列 进口玻璃保冷壶冷水壶1L 绿色',
+              retail_price:'59'
+            },{
+              url:'http://www.sbn.shop/images/201801/thumb_img/4927_thumb_G_1516303472078.jpg',
+              name:'膳魔师（THERMOS）儿童保温杯 吸管杯小孩学饮杯婴儿训练杯宝宝便携防漏不锈钢水杯',
+              retail_price:'59'
+            },{
+              url:'http://www.sbn.shop/images/201801/thumb_img/4611_thumb_G_1515696301432.jpg',
+              name:'德国爱慕莎(emsa)冰凌缤纷系列 进口玻璃保冷壶冷水壶1L 绿色',
+              retail_price:'59'
+            },{
+              url:'http://www.sbn.shop/images/201801/thumb_img/4927_thumb_G_1516303472078.jpg',
+              name:'膳魔师（THERMOS）儿童保温杯 吸管杯小孩学饮杯婴儿训练杯宝宝便携防漏不锈钢水杯',
               retail_price:'59'
             }
           ]
@@ -193,7 +235,7 @@ export default {
   // 轮播
   .swiper {
     width: 100%;
-    height: 417rpx;
+    height: 322rpx;
     position: relative;
     .swiper-container {
       width: 100%;
@@ -212,30 +254,28 @@ export default {
   }
   .dots{
     width: auto;
-    height: 10rpx;
+    height: 12rpx;
     position: absolute;
     bottom: 20rpx;
     border-radius: 50rpx;
-    margin-left: 50%;
+    left: 50%;
     transform: translateX(-50%);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 3rpx 10rpx;
   }
   .dotsItem{
-    width: 10rpx;
-    height: 10rpx;
+    width: 12rpx;
+    height: 12rpx;
     margin: 0rpx 8rpx;
     border-radius: 50%;
-    background-color: rgba(255,255,255,.3);
+    background-color: #fff;
     transition: all .3s;
   }
   .dotActive{
-    width: 20rpx;
-    height: 10rpx;
-    border-radius: 40rpx;
-    background-color: #fff;
+    width: 12rpx;
+    height: 12rpx;
+    background-color: #f2270c;
   }
   .grayLine {
     margin: 12rpx 0;
@@ -244,7 +284,7 @@ export default {
   .icon {
     display: flex;
     flex-wrap: wrap;
-    padding-bottom: 16rpx;
+    padding:4rpx 0 20rpx;
     background: #ffffff;
     div {
       width: 25%;
@@ -264,7 +304,7 @@ export default {
   }
   // 商品列表
   .contentList{
-    padding: 12rpx 20rpx 0;
+    padding: 12rpx 15rpx 0;
     background: #ffffff;
   }
   .barTitle {
@@ -276,36 +316,35 @@ export default {
     text-align: center;
   }
   .Title-left {
-    font-size: 37rpx;
+    font-size: 30rpx;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: 800;
     color: #333;
   }
 
   .Title-right {
-    font-size: 26rpx;
+    font-size: 24rpx;
     color: #aaa;
 
     img {
-      width: 22rpx;
-      height: 22rpx;
+      width: 20rpx;
+      height: 20rpx;
       margin-left: 6rpx;
     }
   }
   // 商品样式
   .sublist {
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
-    padding: 8rpx 0;
+
     div {
-      width: 48%;
+      width: 228rpx;
       box-sizing: border-box;
-      padding: 20rpx 0;
+      padding: 6rpx 0;
       background: #fff;
-      margin-bottom: 12rpx;
-      border: 2rpx solid #eee;
-      border-radius: 14rpx;
+      margin: 0 6rpx 12rpx;
+      border: 1rpx solid #cdcccc;
+      border-radius: 10rpx;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -317,18 +356,16 @@ export default {
       }
 
       p {
-        margin-bottom: 5rpx;
         // text-indent: 1em;
         font-size: 24rpx;
       }
 
       p:nth-child(2) {
-        // width: 98%;
-        padding: 10rpx 20rpx 0;
+        padding: 8rpx 20rpx 0;
       }
 
       p:nth-child(3) {
-        padding: 10rpx 20rpx 0;
+        padding: 0 20rpx;
         font-size: 30rpx;
         font-weight: bold;
         color: #f2270c;
