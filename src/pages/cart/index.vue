@@ -323,7 +323,7 @@
     .right {
       display: flex;
       div:nth-child(1) {
-        color: #b4282d;
+        color: #f2270c;
         padding-right: 40rpx;
       }
       div:nth-child(2) {
@@ -332,7 +332,7 @@
         text-align: center;
         line-height: 100rpx;
         font-size: 29rpx;
-        background: #b4282d;
+        background: #f2270c;
         color: #fff;
       }
     }

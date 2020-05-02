@@ -164,7 +164,7 @@ export default {
   }
   .address {
     background: url('http://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/address-bg-bd30f2bfeb.png') 0 0 repeat-x #fff;
-    padding: 50rpx 0 30rpx 0;
+    padding-top: 46rpx;
     margin-bottom: 20rpx;
     .item {
       padding: 0 20rpx;
@@ -185,10 +185,10 @@ export default {
           .moren {
             width: 60rpx;
             height: 30rpx;
-            border: 1rpx solid #b4282d;
+            border: 1rpx solid #f2270c;
             text-align: center;
             line-height: 30rpx;
-            color: #b4282d;
+            color: #f2270c;
             margin: 10rpx auto 0 auto;
           }
         }
@@ -219,21 +219,19 @@ export default {
     padding: 0 30rpx;
     background: #ffffff;
     .item {
-      padding: 30rpx 0;
+      padding: 20rpx 0;
       display: flex;
       justify-content: space-between;
       border-bottom: 1rpx solid #d9d9d9;
     }
     .item:last-child {
-      border: none;
+      // border: none;
     }
   }
   .cartlist {
     background: #fff;
     margin-bottom: 110rpx;
-    margin-top: 20rpx;
     .item {
-      padding: 20rpx 0;
       border-bottom: 1rpx solid #f4f4f4; // height: 166rpx;
       position: relative;
       .con {
@@ -273,23 +271,24 @@ export default {
   .bottom {
     position: fixed;
     bottom: 0;
-    height: 100rpx;
+    height: 80rpx;
     width: 100%;
     display: flex;
     background: #fff;
     font-size: 32repx;
     div:nth-child(1) {
       flex: 1;
-      line-height: 100rpx;
-      padding-left: 20rpx
+      line-height: 80rpx;
+      padding-left: 20rpx;
+      font-size: 32rpx;
     }
     div:nth-child(2) {
       width: 200rpx;
-      height: 100rpx;
+      height: 80rpx;
       text-align: center;
-      line-height: 100rpx;
+      line-height: 80rpx;
       font-size: 29rpx;
-      background: #b4282d;
+      background: #f2270c;
       color: #fff;
     }
   }

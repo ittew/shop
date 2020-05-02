@@ -2,7 +2,7 @@
 <div class="good">
   <!-- 轮播 -->
   <div class="swiper grayLine">
-    <swiper class="swiper-container" indicator-dots="true" autoplay="true" interval="3000" duration="500" circular="true">
+    <swiper class="swiper-container" indicator-dots="true" indicator-color="rgba(255,255,255,.3)" indicator-active-color="#f2270c" autoplay="true" interval="3000" duration="500" circular="true">
       <block v-for="(item, index) in gallery " :key="index">
         <swiper-item class="swiper-item">
           <image :src="item.img_url" class="slide-image" />
