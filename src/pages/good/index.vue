@@ -1,7 +1,7 @@
 <template>
 <div class="good">
   <!-- 轮播 -->
-  <div class="swiper">
+  <div class="swiper grayLine">
     <swiper class="swiper-container" indicator-dots="true" autoplay="true" interval="3000" duration="500" circular="true">
       <block v-for="(item, index) in gallery " :key="index">
         <swiper-item class="swiper-item">
@@ -12,7 +12,7 @@
     <button class="share" hover-class="none" open-type="share" value="">分享商品</button>
   </div>
   <!-- 商品参数 -->
-  <div v-if="attribute.length!=0" class="attribute">
+  <div v-if="attribute.length!=0" class="attribute grayLine">
     <div class="head">
       商品参数
     </div>
@@ -22,9 +22,13 @@
     </div>
   </div>
   <!-- 商品详情 -->
-  <div class="detail" v-for="(v,i) in detailList" :key="i">
-    <img :src="v.list_pic_url">
+  <div class="detail-content grayLine">
+    <p>商品详情</p>
+    <div class="detail" v-for="(v,i) in detailList" :key="i">
+      <img :src="v.list_pic_url">
+    </div>
   </div>
+
 
   <!-- 底部按钮 -->
   <div class="bottom-fixed">
@@ -205,23 +209,27 @@ methods: {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+page {
+  background: #f4f4f4;
+  height: 100%;
+}
 .grayLine {
-margin-bottom: 20rpx;
+  margin-bottom: 12rpx;
 }
 // 轮播
 .swiper {
 width: 750rpx;
-height: 750rpx;
+height: 450rpx;
 position: relative;
 
 .swiper-container {
-  width: 750rpx;
-  height: 750rpx;
+  width: 100%;
+    height: 100%;
 
   image {
-    width: 750rpx;
-    height: 750rpx;
+    width: 100%;
+    height: 100%;
   }
 }
 
@@ -243,7 +251,6 @@ position: relative;
 .attribute {
 padding: 20rpx 30rpx;
 background: #fff;
-margin-bottom: 20rpx;
 
 .head {
   font-size: 32rpx;
@@ -251,6 +258,7 @@ margin-bottom: 20rpx;
 
 .item {
   display: flex;
+  align-items: center;
   background: #f7f7f7;
   padding: 20rpx 0;
   margin: 20rpx;
@@ -259,6 +267,7 @@ margin-bottom: 20rpx;
     width: 134rpx;
     font-size: 25rpx;
     color: #999;
+    padding-left: 12rpx;
   }
 
   div:nth-child(2) {
@@ -268,6 +277,13 @@ margin-bottom: 20rpx;
     white-space: nowrap;
   }
 }
+}
+.detail-content {
+  background: #fff;
+  p {
+    padding: 12rpx 0;
+    text-align: center;
+  }
 }
 .detail {
   padding-bottom: 120rpx;
@@ -308,7 +324,7 @@ margin-bottom: 20rpx;
         position: absolute;
         top: 0;
         right: 0;
-        background: #b4282d;
+        background: #f2270c;
         text-align: center;
         font-size: 18rpx;
         color: #fff;
@@ -338,8 +354,8 @@ div:nth-child(2) {
 }
 
 div:nth-child(3) {
-  border: 1rpx solid #b4282d;
-  background: #b4282d;
+  border: 1rpx solid #f2270c;
+  background: #f2270c;
   float: left;
   height: 100rpx;
   line-height: 96rpx;
@@ -351,16 +367,17 @@ div:nth-child(3) {
 .attr-pop {
   position: fixed;
   width: 100%;
-  height: 500rpx;
+  height: 470rpx;
   bottom: -500rpx;
   transition: all 400ms ease;
   box-sizing: border-box;
-  padding: 30rpx;
+  padding: 16rpx;
+  border: 1rpx solid #ccc;
   background: #fff;
 
   .top {
     display: flex;
-    margin-bottom: 35rpx;
+    margin-bottom: 20rpx;
     position: relative;
 
     .close {
@@ -394,22 +411,22 @@ div:nth-child(3) {
       }
 
       p:nth-child(1) {
-        color: #b4282d;
+        color: #f2270c;
       }
     }
   }
 
   .b {
     .count {
-      width: 322rpx;
+      width: 240rpx;
       height: 71rpx;
       line-height: 71rpx;
       display: flex;
       border: 1rpx solid #ccc;
       margin-top: 20rpx;
-
+      box-sizing: border-box;
       div {
-        width: 90rpx;
+        flex: 1;
         text-align: center;
       }
 

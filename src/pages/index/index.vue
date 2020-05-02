@@ -25,7 +25,7 @@
     <!-- 商品内容 -->
     <div class="contentList grayLine" v-for="(v,i) in content" :key="i">
       <div class="barTitle">
-        <div class="Title-left">{{v.title}}</div>
+        <div class="Title-left"><span class="icons" :style="{color:v.color}" :class="v.icon"></span><span class="title-content">{{v.title}}</span></div>
         <div class="Title-right" @tap="gotoList">查看全部<img src="/static/images/right-arrow.png" alt=""></div>
       </div>
       <div class="sublist">
@@ -45,49 +45,50 @@ export default {
     return {
       swiperCurrent: 0,
       banner: [
-        '/static/images/index/ad1.jpg',
-        '/static/images/index/ad2.jpg',
-        '/static/images/index/ad3.jpg',
-        '/static/images/index/ad4.jpg',
-        '/static/images/index/ad5.jpg',
-        '/static/images/index/ad6.jpg'
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588334928377&di=4459f41b31641fcb6396e05cdb26b638&imgtype=0&src=http%3A%2F%2Fimg3.imgtn.bdimg.com%2Fit%2Fu%3D1465624788%2C2344864837%26fm%3D214%26gp%3D0.jpg',
+        'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2193748227,3257246483&fm=26&gp=0.jpg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588334971812&di=d63eeb5deb9ee52b1bb4cc35bd60307d&imgtype=0&src=http%3A%2F%2Fmy.dabangong.com%2Fimages%2F201501%2Fgoods_img%2F4247_P_1422167830200.jpg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588335011823&di=e029ad038155e81e40141036243682b4&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201708%2F25%2F20170825101131_JSMer.jpeg',
+        'http://img1.imgtn.bdimg.com/it/u=2565047914,1661736801&fm=26&gp=0.jpg'
       ],
       iconList: [
         {
-          url:'/static/tabs/my-active.png',
+          url:'/static/images/icon/qq1.png',
+          name: '办公用品'
+        },
+        {
+          url:'/static/images/icon/qq2.png',
+          name: '电子数码'
+        },
+        {
+          url:'/static/images/icon/qq16.png',
+          name: '生活用品'
+        },
+        {
+          url:'/static/images/icon/qq13.png',
+          name: '更多'
+        },
+        {
+          url:'/static/images/icon/qq10.png',
+          name: '秒杀'
+        },
+        {
+          url:'/static/images/icon/37.png',
           name: '超市'
         },
         {
-          url:'/static/tabs/my-active.png',
-          name: '超市'
+          url:'/static/images/icon/qq1.png',
+          name: '领券'
         },
         {
-          url:'/static/tabs/my-active.png',
-          name: '超市'
-        },
-        {
-          url:'/static/tabs/my-active.png',
-          name: '超市'
-        },
-        {
-          url:'/static/tabs/my-active.png',
-          name: '超市'
-        },
-        {
-          url:'/static/tabs/my-active.png',
-          name: '超市'
-        },
-        {
-          url:'/static/tabs/my-active.png',
-          name: '超市'
-        },
-        {
-          url:'/static/tabs/my-active.png',
-          name: '超市'
+          url:'/static/images/icon/qq1.png',
+          name: '新品'
         }
       ],
       content: [
         {
+          color: '#FF69B4',
+          icon: 'icon-31_xinpin',
           title: '新品',
           goodsList: [
             {
@@ -106,6 +107,8 @@ export default {
           ]
         },
         {
+          color: '#f2270c',
+          icon:'icon-tuijian',
           title: '推荐',
           goodsList: [
              {
@@ -123,6 +126,8 @@ export default {
             }
           ]
         },{
+          color: '#00BFFF',
+          icon:'icon-bangong0',
           title: '办公用品',
           goodsList: [
             {
@@ -152,6 +157,8 @@ export default {
             }
           ]
         },{
+          color: '#40E0D0',
+          icon:'icon-shumaweixiu',
           title: '电子数码',
           goodsList: [
             {
@@ -177,6 +184,8 @@ export default {
             }
           ]
         },{
+          color: '#FA8072',
+          icon:'icon-shenghuoguan',
           title: '生活用品',
           goodsList: [
             {
@@ -293,7 +302,6 @@ export default {
         margin-top: 16rpx;
         height: 92rpx;
         width: 92rpx;
-        border: 1px solid #eee;
         border-radius: 50%;
         display: inline-block;
       }
@@ -318,10 +326,18 @@ export default {
   .Title-left {
     font-size: 30rpx;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-weight: 800;
+    // font-weight: 800;
     color: #333;
+    display: flex;
+    align-items: center;
   }
-
+  .icons {
+    margin-top: 2rpx;
+    font-size: 38rpx;
+  }
+  .title-content {
+    margin-left: 8rpx;
+  }
   .Title-right {
     font-size: 24rpx;
     color: #aaa;
@@ -351,7 +367,7 @@ export default {
       img {
         display: block;
         width: 200rpx;
-        height: 180rpx;
+        height: 160rpx;
         margin: 0 auto;
       }
 
@@ -365,7 +381,7 @@ export default {
       }
 
       p:nth-child(3) {
-        padding: 0 20rpx;
+        padding-left: 14rpx;
         font-size: 30rpx;
         font-weight: bold;
         color: #f2270c;

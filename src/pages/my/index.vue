@@ -4,13 +4,14 @@
       <img :src="userInfo.avatarUrl?userInfo.avatarUrl:avator" alt="">
       <div @click="toLogin">
         <p class="whiteFont" v-if="userInfo.nickName">{{userInfo.nickName}}</p>
-        <button class="whiteFont" v-if="!userInfo.nickName" open-type="getUserInfo" @getuserinfo="handleGetUserInfo" >微信登录</button>
+        <button class="whiteFont loginBtn" v-if="!userInfo.nickName" open-type="getUserInfo" @getuserinfo="handleGetUserInfo" >微信登录</button>
         <p class="whiteFont" v-else>微信用户</p>
       </div>
     </div>
     <div class="iconlist">
       <div @click="goTo(item.url)" v-for="(item, index) in listData" :key="index">
-        <img :src="item.icon" alt="">
+        <!-- <img :src="item.icon" alt=""> -->
+        <span :class="item.icon" :style="{'color': item.color}" class="itemIcon"></span>
         <span>{{item.title}}</span>
       </div>
     </div>
@@ -28,49 +29,57 @@
     mounted() {},
     data() {
       return {
-        avator: "http://yanxuan.nosdn.127.net/8945ae63d940cc42406c3f67019c5cb6.png",
+        avator: "/static/images/user.png",
         allcheck: false,
         listData: [],
         Listids: [],
         userInfo: {},
         listData: [{
             title: "我的订单",
-            icon: "/static/images/collect.png",
+            color: '#FFC0CB',
+            icon: "icon-dingdan",
             url: "/pages/orderList/main"
           },
           {
             title: "优惠券",
-            icon: "/static/images/collect.png",
+            color: '#f2270c',
+            icon: "icon-weibiaoti2fuzhi02",
             url: "/pages/couponList/main"
           },
           {
             title: "我的足迹",
-           icon: "/static/images/collect.png",
+            color: '#BA55D3',
+           icon: "icon-wodezuji",
             url: ""
           },
           {
             title: "我的收藏",
-            icon: "/static/images/collect.png",
+            color: '#FFA500',
+            icon: "icon-shoucang",
             url: ""
           },
           {
             title: "地址管理",
-            icon: "/static/images/collect.png",
+            color: '#90EE90',
+            icon: "icon-dizhi",
             url: "/pages/address/main"
           },
           {
             title: "联系客服",
-            icon: "/static/images/collect.png",
+            color: '#AFEEEE',
+            icon: "icon-lianxikefu",
             url: ""
           },
           {
             title: "帮助中心",
-            icon: "/static/images/collect.png",
+            color: '#87CEFA',
+            icon: "icon-bangzhuzhongxin",
             url: ""
           },
           {
             title: "意见反馈",
-            icon: "/static/images/collect.png",
+            color: '#7B68EE',
+            icon: "icon-Opinion",
             url: ""
           }
         ]
@@ -113,9 +122,10 @@ page {
   .myinfo {
     width: 100%;
     height: 280rpx;
+    background: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588412689564&di=36f0468e071ce07990dad9f851e80bed&imgtype=0&src=http%3A%2F%2Fku.90sjimg.com%2Fback_pic%2F03%2F89%2F88%2F1157da885857ab1.jpg') no-repeat;
+    background-size: 100% 100%;
     display: flex;
     align-items: center;
-    background: #333;
     color: #fff;
     padding: 0 30rpx;
     box-sizing: border-box;
@@ -138,8 +148,9 @@ page {
       }
     }
   }
-  .whiteFont {
-    color: #fff;
+
+  .loginBtn::after {
+    border: none;
   }
   .iconlist {
     display: flex;
@@ -148,7 +159,7 @@ page {
     flex-wrap: wrap;
     div {
       width: 33.33%;
-      padding: 50rpx 0;
+      padding: 20rpx 0;
       text-align: center;
       border-right: 1rpx solid rgba(0, 0, 0, .15);
       border-bottom: 1rpx solid rgba(0, 0, 0, .15);
@@ -156,10 +167,9 @@ page {
       display: flex;
       flex-direction: column;
       align-items: center;
-      img {
-        width: 50rpx;
-        height: 50rpx;
-        margin-bottom: 20rpx;
+      .itemIcon {
+        font-size: 54rpx;
+        margin-bottom: 2rpx;
       }
 
     }

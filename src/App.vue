@@ -51,6 +51,7 @@ export default {
 </script>
 
 <style>
+@import '../static/css/icon.css';
 .container {
   height: 100%;
   display: flex;
@@ -90,26 +91,6 @@ view,scroll-view,swiper,swiper-item,movable-area,movable-view,cover-view,cover-i
   -webkit-transition: width 2s;
   -o-transition: width 2s;
 }
-@font-face {
-  font-family: 'iconfont';  /* project id 1788983 */
-  src: url('//at.alicdn.com/t/font_1788983_wjmt7e7679.eot');
-  src: url('//at.alicdn.com/t/font_1788983_wjmt7e7679.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1788983_wjmt7e7679.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1788983_wjmt7e7679.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1788983_wjmt7e7679.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1788983_wjmt7e7679.svg#iconfont') format('svg');
-}
 
-[class*="icon-"] {
-  font-family: "iconfont" !important;
-  font-size: 16px;
-  display: inline-block;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-.icon-dianhua:before {
-  content: "\e602";
-}
 
 </style>

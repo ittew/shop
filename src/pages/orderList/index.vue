@@ -381,7 +381,6 @@ page{
           justify-content: space-between;
           .goods-name{
             font-size: 32rpx;
-            font-weight: bold;
           }
           .price-num{
             display: flex;
@@ -391,7 +390,7 @@ page{
               font-weight:bold;
             }
             .num{
-              font-weight:bold;
+              // font-weight:bold;
             }
           }
         }

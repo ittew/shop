@@ -121,17 +121,17 @@ export default {
           justify-content: space-between;
           .goods-name{
             font-size: 32rpx;
-            font-weight: bold;
+            // font-weight: bold;
           }
           .price-num{
             display: flex;
             justify-content: space-between;
              .price{
               color: #f2270c;
-              font-weight:bold;
+              // font-weight:bold;
             }
             .num{
-              font-weight:bold;
+              // font-weight:bold;
             }
           }
         }
@@ -140,7 +140,7 @@ export default {
     .total-price{
       display: flex;
       justify-content: space-between;
-      font-weight: bold;
+      // font-weight: bold;
       height: 100rpx;
       align-items: center;
       padding-right: 20rpx;
