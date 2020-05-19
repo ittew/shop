@@ -118,6 +118,13 @@ export default {
       console.log(e.mp.detail.scrollTop)
     },
     addClassName (index,id) {
+      // const query = wx.createSelectorQuery()
+      // query.select('#'+id).boundingClientRect()
+      // query.selectViewport().scrollOffset()
+      // query.exec(function(res){
+      //     console.log(res[0].top)       // #the-id节点的上边界坐标
+      //     // res[1].scrollTop // 显示区域的竖直滚动位置
+      // })
       wx.showToast({
         title: id,
         icon: 'none',
@@ -127,7 +134,7 @@ export default {
       for (let i = 0; i < this.brandData.length; ++i) {
         if (this.brandData[i].letter == id) {
           this.toView= this.brandData[i].letter
-          console.log(this.toView)
+          // console.log(this.toView)
           break
         }
       }
@@ -145,19 +152,23 @@ page {
  /* 搜索框 */
 .search{
   width: 90%;
+  height: 62rpx;
+  line-height: 62rpx;
   display: flex;
   align-items: center;
   margin: 0 auto;
   background-color: rgb(240, 240, 240);
-  padding: 10rpx 20rpx;
+  padding: 0 20rpx;
   border-radius: 35rpx;
 }
-
+.icon-sousuo {
+  margin-top: 3rpx;
+}
 .search input{
   width: 90%;
   height: 100%;
-  font-size: 29rpx;
-  margin-left: 20rpx;
+  font-size: 24rpx;
+  margin-left: 12rpx;
 }
 .longinPage{
   position: fixed;
@@ -165,7 +176,7 @@ page {
   left: 0;
   z-index: 50;
   width: 100%;
-  height: 600rpx;
+  height: 100%;
   padding-right: 9%;
   box-sizing: border-box;
   overflow: hidden;
