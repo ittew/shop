@@ -15,6 +15,17 @@
         </div>
       </div>
     </div>
+    <!-- 公告 -->
+    <div class="hot-swiper">
+      <span class="icon-hot"></span>
+      <swiper class="swiper-container " vertical autoplay="true" interval="3000" circular="true" duration="500">
+        <block v-for="(item, index) in hotData" :key="index" >
+          <swiper-item class="swiper-item">
+            <div class="item ellipsis">{{item}}</div>
+          </swiper-item>
+        </block>
+      </swiper>
+    </div>
     <!-- icon -->
     <div class="icon grayLine">
       <div @click="categoryList(item.id)" v-for="(item, index) in iconList" :key="index">
@@ -25,7 +36,7 @@
     <!-- 商品内容 -->
     <div class="contentList grayLine" v-for="(v,i) in content" :key="i">
       <div class="barTitle">
-        <div class="Title-left"><span class="icons" :style="{color:v.color}" :class="v.icon"></span><span class="title-content">{{v.title}}</span></div>
+        <div class="Title-left"><span class="no">{{i+1}}</span><span class="icons icon-caidanlan"></span><span class="title-content">{{v.title}}</span></div>
         <div class="Title-right" @tap="gotoList">查看全部<img src="/static/images/right-arrow.png" alt=""></div>
       </div>
       <div class="sublist">
@@ -35,6 +46,11 @@
           <p>￥{{subitem.retail_price}}</p>
         </div>
       </div>
+    </div>
+    <!-- 底部版权 -->
+    <div class="bottom">
+      <p>陕西省广播电视信息网络股份有限公司</p>
+      <p>免费电话：400-168-8686</p>
     </div>
   </div>
 </template>
@@ -51,38 +67,23 @@ export default {
         'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588335011823&di=e029ad038155e81e40141036243682b4&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201708%2F25%2F20170825101131_JSMer.jpeg',
         'http://img1.imgtn.bdimg.com/it/u=2565047914,1661736801&fm=26&gp=0.jpg'
       ],
+      hotData: ['111111111111111111111111111111111111111111111111111111111111111111111','22222222222222222222222222222222222222222222222222222222222','333333333333333333333333333333333333333333'],
       iconList: [
         {
-          url:'/static/images/icon/qq1.png',
-          name: '办公用品'
-        },
-        {
-          url:'/static/images/icon/qq2.png',
-          name: '电子数码'
-        },
-        {
-          url:'/static/images/icon/qq16.png',
-          name: '生活用品'
-        },
-        {
-          url:'/static/images/icon/qq13.png',
-          name: '更多'
-        },
-        {
           url:'/static/images/icon/qq10.png',
-          name: '秒杀'
+          name: '促销活动'
         },
         {
           url:'/static/images/icon/37.png',
-          name: '超市'
+          name: '特价'
+        },
+        {
+          url:'/static/images/icon/qq16.png',
+          name: '品牌'
         },
         {
           url:'/static/images/icon/qq1.png',
-          name: '领券'
-        },
-        {
-          url:'/static/images/icon/qq1.png',
-          name: '新品'
+          name: '推荐'
         }
       ],
       content: [
@@ -286,6 +287,26 @@ export default {
     height: 12rpx;
     background-color: #f2270c;
   }
+  .hot-swiper {
+    height: 60rpx;
+    display: flex;
+    margin-bottom: 12rpx;
+    background: #fff;
+    padding-left: 15rpx;
+    .swiper-container {
+      flex: 1;
+      height: 60rpx;
+      line-height: 60rpx;
+    }
+    .icon-hot {
+      color:#f2270c;
+      margin: 4rpx 6rpx 0 0;
+      font-size: 40rpx;
+    }
+    .item {
+      width: 98%;
+    }
+  }
   .grayLine {
     margin: 12rpx 0;
   }
@@ -325,18 +346,25 @@ export default {
   }
   .Title-left {
     font-size: 30rpx;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    // font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     // font-weight: 800;
     color: #333;
     display: flex;
     align-items: center;
+    padding-left: 6rpx;
+    .no {
+      color: #f2270c;
+      font-size: 30rpx;
+    }
   }
   .icons {
-    margin-top: 2rpx;
-    font-size: 38rpx;
+    color: #f2270c;
+    font-size: 28rpx;
+    margin-top: 4rpx;
+    // margin-left: -1rpx;
   }
   .title-content {
-    margin-left: 8rpx;
+    margin-left: 16rpx;
   }
   .Title-right {
     font-size: 24rpx;
@@ -387,5 +415,14 @@ export default {
         color: #f2270c;
       }
     }
+  }
+.bottom {
+  text-align: center;
+  margin-top: 20rpx;
+  margin-bottom: 12rpx;
+  p {
+    font-size: 18rpx;
+    color: #999;
+  }
 }
 </style>
