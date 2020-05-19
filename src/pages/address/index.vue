@@ -119,7 +119,7 @@ export default {
       padding: 0 20rpx;
       .list {
         position: relative;
-        padding: 15rpx 0;
+        padding: 28rpx 0;
         border-bottom: 1rpx solid #d9d9d9;
 
       }

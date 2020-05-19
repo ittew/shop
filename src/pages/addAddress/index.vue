@@ -104,15 +104,19 @@ export default {
   background: #fff;
   .item {
     width: 690rpx;
-    height: 70rpx;
-    line-height: 70rpx;
+    height: 90rpx;
+    line-height: 90rpx;
     margin: 0 auto;
-    padding: 10rpx 0;
+    padding: 20rpx 0;
     border-bottom: 1rpx solid #f4f4f4;
     input {
       width: 100%;
       height: 100%;
+      font-size: 30rpx;
     }
+  }
+  .checkbox {
+    font-size: 30rpx;
   }
   .itemend {
     margin-top: 15rpx;
