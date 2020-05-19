@@ -13,20 +13,39 @@
       <div class="item" :class="{'active':curIndex == 1}" @tap="changeTab(1)">全部产品</div>
       <div class="item" :class="{'active':curIndex == 2}" @tap="changeTab(2)">产品分类</div>
     </div>
+
     <!-- 店铺首页 -->
-    <div class="contentList grayLine" v-for="(v,i) in content" :key="i" v-show="curIndex == 0">
-      <div class="barTitle">
-        <div class="Title-left"><span class="icons" :style="{color:v.color}" :class="v.icon"></span><span class="title-content">{{v.title}}</span></div>
-        <!-- <div class="Title-right" @tap="gotoList">查看全部<img src="/static/images/right-arrow.png" alt=""></div> -->
+    <div v-show="curIndex == 0">
+      <!-- 轮播图 -->
+      <div class="swiper">
+        <swiper class="swiper-container" @change="swiperChange" autoplay="true" interval="3000" circular="true" duration="500">
+          <block v-for="(item, index) in banner" :key="index" >
+            <swiper-item class="swiper-item">
+              <image :src="item" class="slide-image" />
+            </swiper-item>
+          </block>
+        </swiper>
+        <div class="dots">
+          <div v-for="(v,i) in banner" :key="i">
+            <div class="dotsItem" :class="i == swiperCurrent ? ' dotActive' : ''"></div>
+          </div>
+        </div>
       </div>
-      <div class="sublist">
-        <div v-for="(subitem, subindex) in v.goodsList" :key="subindex" @click="jumpDetail">
-          <img :src="subitem.url" alt="">
-          <p class="ellipsis-two">{{subitem.name}}</p>
-          <p>￥{{subitem.retail_price}}</p>
+      <div class="contentList grayLine" v-for="(v,i) in content" :key="i">
+        <div class="barTitle">
+          <div class="Title-left"><span class="icons" :style="{color:v.color}" :class="v.icon"></span><span class="title-content">{{v.title}}</span></div>
+          <!-- <div class="Title-right" @tap="gotoList">查看全部<img src="/static/images/right-arrow.png" alt=""></div> -->
+        </div>
+        <div class="sublist">
+          <div v-for="(subitem, subindex) in v.goodsList" :key="subindex" @click="jumpDetail">
+            <img :src="subitem.url" alt="">
+            <p class="ellipsis-two">{{subitem.name}}</p>
+            <p>￥{{subitem.retail_price}}</p>
+          </div>
         </div>
       </div>
     </div>
+
     <div class="all" v-show="curIndex == 1">
       <div class="item" v-for="(subitem, subindex) in goodsList" :key="subindex" @click="jumpDetail">
         <img :src="subitem.url" alt="" class="pic">
@@ -44,6 +63,14 @@
 export default {
   data() {
     return {
+      swiperCurrent: 0,
+      banner: [
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588334928377&di=4459f41b31641fcb6396e05cdb26b638&imgtype=0&src=http%3A%2F%2Fimg3.imgtn.bdimg.com%2Fit%2Fu%3D1465624788%2C2344864837%26fm%3D214%26gp%3D0.jpg',
+        'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2193748227,3257246483&fm=26&gp=0.jpg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588334971812&di=d63eeb5deb9ee52b1bb4cc35bd60307d&imgtype=0&src=http%3A%2F%2Fmy.dabangong.com%2Fimages%2F201501%2Fgoods_img%2F4247_P_1422167830200.jpg',
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588335011823&di=e029ad038155e81e40141036243682b4&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201708%2F25%2F20170825101131_JSMer.jpeg',
+        'http://img1.imgtn.bdimg.com/it/u=2565047914,1661736801&fm=26&gp=0.jpg'
+      ],
       curIndex: 0,
       content: [{
           color: '#00BFFF',
@@ -193,7 +220,7 @@ export default {
     }
   }
   .tab{
-    background: #f5f5f5;
+    // background: #f5f5f5;
     display: flex;
     height: 80rpx;
     .item{
@@ -322,4 +349,49 @@ export default {
     }
   }
 }
+// 轮播
+  .swiper {
+    width: 100%;
+    height: 322rpx;
+    position: relative;
+    .swiper-container {
+      width: 100%;
+      height: 100%;
+
+      .swiper-item {
+        width: 100%;
+        height: 100%;
+
+        .slide-image {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+  .dots{
+    width: auto;
+    height: 12rpx;
+    position: absolute;
+    bottom: 20rpx;
+    border-radius: 50rpx;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .dotsItem{
+    width: 12rpx;
+    height: 12rpx;
+    margin: 0rpx 8rpx;
+    border-radius: 50%;
+    background-color: #fff;
+    transition: all .3s;
+  }
+  .dotActive{
+    width: 12rpx;
+    height: 12rpx;
+    background-color: #f2270c;
+  }
 </style>
