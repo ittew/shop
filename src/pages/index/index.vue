@@ -1,5 +1,12 @@
 <template>
   <div class="index">
+    <!-- 搜索框 -->
+    <div class="search-box">
+       <div class="search">
+        <span class="icon-sousuo"></span>
+          <input placeholder="请输入您要搜索的商品关键字">
+      </div>
+    </div>
     <!-- 轮播图 -->
     <div class="swiper">
       <swiper class="swiper-container" @change="swiperChange" autoplay="true" interval="3000" circular="true" duration="500">
@@ -242,6 +249,32 @@ export default {
     background: #f4f4f4;
     height: 100%;
   }
+  /* 搜索框 */
+.search-box {
+  width: 100%;
+  padding: 12rpx 0;
+  background-color: #fff;
+}
+.search{
+  width: 90%;
+  height: 62rpx;
+  line-height: 62rpx;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  background-color: rgb(240, 240, 240);
+  padding: 0 20rpx;
+  border-radius: 35rpx;
+}
+.icon-sousuo {
+  margin-top: 3rpx;
+}
+.search input{
+  width: 90%;
+  height: 100%;
+  font-size: 24rpx;
+  margin-left: 12rpx;
+}
   // 轮播
   .swiper {
     width: 100%;
