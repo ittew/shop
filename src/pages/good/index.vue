@@ -21,6 +21,18 @@
       <div>{{item.value}}</div>
     </div>
   </div>
+  <!-- 商家店铺 -->
+  <div class="component_shop">
+    <div class="shop_head" @click="goShopd">
+      <img class="shop_img" src="/static/images/shopd.png" alt="">
+      <div class="head_avatar">
+        <p class="head_t">戴尔自营专卖店</p>
+        <p class="head_f">商品数量：<span>4</span>件商品</p>
+        <p class="head_f">店铺收藏：<span>0</span>人收藏</p>
+      </div>
+      <div class="go_shop">进入 ></div>
+    </div>
+  </div>
   <!-- 商品详情 -->
   <div class="detail-content grayLine">
     <p>商品详情</p>
@@ -185,6 +197,13 @@ methods: {
     }
   },
   // 跳转到购物车列表
+  goShopd() {
+    wx.navigateTo({
+      url: "/pages/store/main"
+    });
+    this.showpop = false
+  },
+  // 跳转到购物车列表
   toCart() {
     wx.switchTab({
       url: "/pages/cart/main"
@@ -216,6 +235,48 @@ page {
 }
 .grayLine {
   margin-bottom: 12rpx;
+}
+.component_shop {
+  width: 100%;
+  background: #fff;
+  padding: 30rpx 24rpx;
+  margin: 20rpx 0;
+  box-sizing: border-box;
+  .shop_head {
+    display: flex;
+    position: relative;
+    .go_shop {
+      position: absolute;
+      top: 50%;
+      right: 30rpx;
+      font-size: 26rpx;
+      transform: translateY(-50%);
+    }
+    .shop_img {
+      margin-right: 20rpx;
+      width: 120rpx;
+      height: 120rpx;
+      border-radius: 4rpx;
+    }
+    .head_avatar {
+      flex: 1;
+      p {
+        span {
+          color: red;
+          padding-right: 10rpx;
+        }
+      }
+      .head_t {
+        padding-bottom: 10rpx;
+        color: #333;
+        font-size: 30rpx;
+      }
+      .head_f {
+        color: #999;
+        font-size: 26rpx;
+      }
+    }
+  }
 }
 // 轮播
 .swiper {
@@ -281,7 +342,8 @@ background: #fff;
 .detail-content {
   background: #fff;
   p {
-    padding: 12rpx 0;
+    padding: 28rpx 0;
+    font-size: 32rpx;
     text-align: center;
   }
 }
