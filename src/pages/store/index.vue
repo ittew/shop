@@ -165,8 +165,8 @@ export default {
       this.curIndex = index
       if (index == 2) {
         // 跳转分类
-        wx.switchTab({
-          url: "/pages/category/main"
+        wx.navigateTo({
+          url: "/pages/sortlist/main"
         })
       }
     },
