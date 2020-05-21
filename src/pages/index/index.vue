@@ -27,7 +27,7 @@
       <span class="icon-hot"></span>
       <swiper class="swiper-container " vertical autoplay="true" interval="3000" circular="true" duration="500">
         <block v-for="(item, index) in hotData" :key="index" >
-          <swiper-item class="swiper-item">
+          <swiper-item class="swiper-item" @click="jumpNewDetail">
             <div class="item ellipsis">{{item}}</div>
           </swiper-item>
         </block>
@@ -38,6 +38,19 @@
       <div @click="categoryList(item.id)" v-for="(item, index) in iconList" :key="index">
         <img :src="item.url" alt="">
         <p>{{item.name}}</p>
+      </div>
+    </div>
+    <div class="contentList grayLine" v-for="(v,i) in recommdContent" :key="i">
+      <div class="barTitle">
+        <div class="Title-left"><span class="icons-recommend" :class="v.icon" :style="{color:v.color}"></span><span class="title-content">{{v.title}}</span></div>
+        <div class="Title-right" @tap="gotoList">查看全部<img src="/static/images/right-arrow.png" alt=""></div>
+      </div>
+      <div class="sublist">
+        <div v-for="(subitem, subindex) in v.goodsList" :key="subindex" @click="jumpDetail">
+          <img :src="subitem.url" alt="">
+          <p class="ellipsis-two">{{subitem.name}}</p>
+          <p>￥{{subitem.retail_price}}</p>
+        </div>
       </div>
     </div>
     <!-- 商品内容 -->
@@ -77,22 +90,67 @@ export default {
       hotData: ['111111111111111111111111111111111111111111111111111111111111111111111','22222222222222222222222222222222222222222222222222222222222','333333333333333333333333333333333333333333'],
       iconList: [
         {
+          id: 0,
           url:'/static/images/icon/qq10.png',
           name: '促销活动'
         },
         {
+          id: 1,
           url:'/static/images/icon/37.png',
           name: '特价'
         },
         {
+          id: 2,
           url:'/static/images/icon/qq16.png',
           name: '品牌'
         },
         {
+          id: 3,
           url:'/static/images/icon/qq1.png',
           name: '推荐'
         }
       ],
+      recommdContent: [
+        {
+          color: '#FF69B4',
+          icon: 'icon-31_xinpin',
+          title: '推荐商品',
+          goodsList: [
+            {
+              url:'http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg',
+              name:'惠普（HP）CH563Z 802 黑色墨盒',
+              retail_price:'59'
+            },{
+              url:'http://www.sbn.shop/images/201908/thumb_img/10772_thumb_G_1564595802738.jpg',
+              name:'扬帆耐立打印机碳粉YFHC',
+              retail_price:'59'
+            },{
+              url:'http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg',
+              name:'惠普（HP）CH563Z 802 黑色墨盒',
+              retail_price:'59'
+            }
+          ]
+        },
+        {
+          color: '#f2270c',
+          icon:'.icon-hot',
+          title: '推荐品牌',
+          goodsList: [
+              {
+              url:'http://www.sbn.shop/images/201812/thumb_img/10655_thumb_G_1544730403475.jpg',
+              name:'晨光签字笔12支',
+              retail_price:'59'
+            },{
+              url:'http://www.sbn.shop/images/201801/thumb_img/4462_thumb_G_1515625311762.jpg',
+              name:'得力9375薄型复写纸(蓝)(25.5*18.5cm)-16K',
+              retail_price:'59'
+            },{
+              url:'http://www.sbn.shop/images/201812/thumb_img/10655_thumb_G_1544730403475.jpg',
+              name:'晨光签字笔12支',
+              retail_price:'59'
+            }
+          ]
+        }],
       content: [
         {
           color: '#FF69B4',
@@ -232,6 +290,30 @@ export default {
   methods: {
     swiperChange(e) {
       this.swiperCurrent = e.mp.detail.current
+    },
+    categoryList (id) {
+      let url = ''
+      switch (id) {
+        case 0:
+        case 1:
+        case 3:
+          url = '/pages/list/main'
+          break;
+        case 2:
+          url = '/pages/brandList/main'
+          break;
+
+        default:
+          break;
+      }
+      wx.navigateTo({
+        url
+      })
+    },
+    jumpNewDetail() {
+      wx.navigateTo({
+        url: '/pages/newdetail/main'
+      })
     },
     gotoList() {},
     // 跳转到商品详情
@@ -389,6 +471,10 @@ export default {
       color: #f2270c;
       font-size: 30rpx;
     }
+  }
+  .icons-recommend {
+    font-size: 30rpx;
+    margin-top:2rpx;
   }
   .icons {
     color: #f2270c;

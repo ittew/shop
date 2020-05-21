@@ -101,6 +101,19 @@ export default {
         "name": "德峰",
         "img": "http://shop.029-smart.com/upload/brand/a7da11fb-7d22-42e3-978a-69b833803219.jpg"
         }]
+      },{
+      "letter": "G",
+      "childArr": [{
+        "linkageid": 110000,
+        "letter": "G",
+        "name": "戴尔",
+        "img": "http://shop.029-smart.com/upload/brand/257b0bbc-d07c-4d49-bcf0-5393a34d1299.jpg"
+        },{
+        "linkageid": 110000,
+        "letter": "G",
+        "name": "德峰",
+        "img": "http://shop.029-smart.com/upload/brand/a7da11fb-7d22-42e3-978a-69b833803219.jpg"
+        }]
       }],
       hotCity:[],
       thatnum: 0,
