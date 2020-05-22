@@ -44,7 +44,6 @@
     <div class="contentList grayLine" v-for="(v,i) in brandList" :key="i">
       <div class="barTitle">
         <div class="Title-left"><span class="icons-recommend" :class="v.icon" :style="{color:v.color}"></span><span class="title-content">{{v.title}}</span></div>
-        <div class="Title-right" @tap="gotoList('brand')">查看全部<img src="/static/images/right-arrow.png" alt=""></div>
       </div>
       <div class="brand-sublist">
         <div v-for="(subitem, subindex) in v.goodsList" :key="subindex" @click="jumpDetail('brand')">
@@ -149,14 +148,14 @@ export default {
         {
           color: '#f2270c',
           icon:'.icon-hot',
-          title: '推荐店铺',
+          title: '推荐商家',
           goodsList: [
               {
-              url:'http://shop.029-smart.com/upload/brand/a7da11fb-7d22-42e3-978a-69b833803219.jpg'
+              url:'/static/images/huawei.jpg'
             },{
-              url:'http://shop.029-smart.com/upload/brand/257b0bbc-d07c-4d49-bcf0-5393a34d1299.jpg'
+              url:'/static/images/lianxiang.jpg'
             },{
-              url:'http://shop.029-smart.com/upload/brand/0ffed031-864a-4e89-b7dc-05853ddfd599.jpg'
+              url:'/static/images/hongji.jpg'
             }
           ]
         }
@@ -530,14 +529,16 @@ export default {
     display: flex;
     flex-wrap: wrap;
     div {
-      width: 25%;
-      padding: 20rpx;
+      width: 225rpx;
+      padding: 10rpx 0;
       display: flex;
       justify-content: center;
       align-items: center;
+      margin: 0 8rpx;
       img {
-        width: 204rpx;
-        height: 72rpx;
+        width: 100%;
+        height: 145rpx;
+        border-radius: 8rpx;
       }
     }
   }
@@ -568,6 +569,7 @@ export default {
   .sublist {
     display: flex;
     flex-wrap: wrap;
+    padding: 10rpx 0;
 
     div {
       width: 228rpx;
