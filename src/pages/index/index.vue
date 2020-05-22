@@ -44,7 +44,7 @@
     <div class="contentList grayLine" v-for="(v,i) in brandList" :key="i">
       <div class="barTitle">
         <div class="Title-left"><span class="icons-recommend" :class="v.icon" :style="{color:v.color}"></span><span class="title-content">{{v.title}}</span></div>
-        <div class="Title-right" @tap="gotoList">查看全部<img src="/static/images/right-arrow.png" alt=""></div>
+        <div class="Title-right" @tap="gotoList('brand')">查看全部<img src="/static/images/right-arrow.png" alt=""></div>
       </div>
       <div class="brand-sublist">
         <div v-for="(subitem, subindex) in v.goodsList" :key="subindex" @click="jumpDetail('brand')">
@@ -341,10 +341,16 @@ export default {
         url: '/pages/newdetail/main'
       })
     },
-    gotoList() {
-      wx.navigateTo({
-        url: '/pages/brandList/main'
-      })
+    gotoList(item) {
+      if(item=='brand') {
+        wx.navigateTo({
+          url: '/pages/brandList/main'
+        })
+      } else {
+        wx.switchTab({
+          url: '/pages/category/main'
+        })
+      }
     },
     // 跳转到商品详情
     jumpDetail(item) {
@@ -352,10 +358,11 @@ export default {
         wx.navigateTo({
           url: '/pages/store/main'
         })
+      } else {
+        wx.navigateTo({
+          url: '/pages/good/main'
+        })
       }
-      wx.navigateTo({
-        url: '/pages/good/main'
-      })
     }
   }
 }
