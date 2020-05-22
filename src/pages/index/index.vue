@@ -24,7 +24,7 @@
     </div>
     <!-- 公告 -->
     <div class="hot-swiper">
-      <span class="icon-hot"></span>
+      <span class="icon-laba"></span>
       <swiper class="swiper-container " vertical autoplay="true" interval="3000" circular="true" duration="500">
         <block v-for="(item, index) in hotData" :key="index" >
           <swiper-item class="swiper-item" @click="jumpNewDetail">
@@ -87,7 +87,7 @@ export default {
         'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588335011823&di=e029ad038155e81e40141036243682b4&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201708%2F25%2F20170825101131_JSMer.jpeg',
         'http://img1.imgtn.bdimg.com/it/u=2565047914,1661736801&fm=26&gp=0.jpg'
       ],
-      hotData: ['111111111111111111111111111111111111111111111111111111111111111111111','22222222222222222222222222222222222222222222222222222222222','333333333333333333333333333333333333333333'],
+      hotData: ['5G新基建如何激活万亿市场？','5G领衔新基建，网络建设走在前——我国5G网络建设分析','5G“新基建”，新场景、新模式'],
       iconList: [
         {
           id: 0,
@@ -96,7 +96,7 @@ export default {
         },
         {
           id: 1,
-          url:'/static/images/icon/37.png',
+          url:'/static/images/icon/qq2.png',
           name: '特价'
         },
         {
@@ -106,7 +106,7 @@ export default {
         },
         {
           id: 3,
-          url:'/static/images/icon/qq1.png',
+          url:'/static/images/icon/qq13.png',
           name: '推荐'
         }
       ],
@@ -114,7 +114,7 @@ export default {
         {
           color: '#FF69B4',
           icon: 'icon-31_xinpin',
-          title: '推荐商品',
+          title: '推荐店铺',
           goodsList: [
             {
               url:'http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg',
@@ -134,7 +134,7 @@ export default {
         {
           color: '#f2270c',
           icon:'.icon-hot',
-          title: '推荐品牌',
+          title: '推荐商品',
           goodsList: [
               {
               url:'http://www.sbn.shop/images/201812/thumb_img/10655_thumb_G_1544730403475.jpg',
@@ -155,7 +155,7 @@ export default {
         {
           color: '#FF69B4',
           icon: 'icon-31_xinpin',
-          title: '新品',
+          title: '电脑',
           goodsList: [
             {
               url:'http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg',
@@ -175,7 +175,7 @@ export default {
         {
           color: '#f2270c',
           icon:'icon-tuijian',
-          title: '推荐',
+          title: '移动办公',
           goodsList: [
              {
               url:'http://www.sbn.shop/images/201812/thumb_img/10655_thumb_G_1544730403475.jpg',
@@ -194,7 +194,7 @@ export default {
         },{
           color: '#00BFFF',
           icon:'icon-bangong0',
-          title: '办公用品',
+          title: '信息安全',
           goodsList: [
             {
               url:'http://www.sbn.shop/images/201801/thumb_img/4860_thumb_G_1515966007157.jpg',
@@ -225,7 +225,7 @@ export default {
         },{
           color: '#40E0D0',
           icon:'icon-shumaweixiu',
-          title: '电子数码',
+          title: '网络设备',
           goodsList: [
             {
               url:'http://www.sbn.shop/images/201807/thumb_img/9578_thumb_G_1530731976148.jpg',
@@ -252,7 +252,7 @@ export default {
         },{
           color: '#FA8072',
           icon:'icon-shenghuoguan',
-          title: '生活用品',
+          title: '存储',
           goodsList: [
             {
               url:'http://www.sbn.shop/images/201801/thumb_img/4611_thumb_G_1515696301432.jpg',
@@ -413,9 +413,9 @@ export default {
       height: 60rpx;
       line-height: 60rpx;
     }
-    .icon-hot {
+    .icon-laba {
       color:#f2270c;
-      margin: 4rpx 6rpx 0 0;
+      margin: 10rpx 6rpx 0 0;
       font-size: 40rpx;
     }
     .item {
