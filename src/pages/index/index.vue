@@ -40,6 +40,7 @@
         <p>{{item.name}}</p>
       </div>
     </div>
+    <!-- 推荐商品 -->
     <div class="contentList grayLine" v-for="(v,i) in recommdContent" :key="i">
       <div class="barTitle">
         <div class="Title-left"><span class="icons-recommend" :class="v.icon" :style="{color:v.color}"></span><span class="title-content">{{v.title}}</span></div>
@@ -50,6 +51,18 @@
           <img :src="subitem.url" alt="">
           <p class="ellipsis-two">{{subitem.name}}</p>
           <p>￥{{subitem.retail_price}}</p>
+        </div>
+      </div>
+    </div>
+    <!-- 推荐品牌 -->
+    <div class="contentList grayLine" v-for="(v,i) in brandList" :key="i">
+      <div class="barTitle">
+        <div class="Title-left"><span class="icons-recommend" :class="v.icon" :style="{color:v.color}"></span><span class="title-content">{{v.title}}</span></div>
+        <div class="Title-right" @tap="gotoList">查看全部<img src="/static/images/right-arrow.png" alt=""></div>
+      </div>
+      <div class="brand-sublist">
+        <div v-for="(subitem, subindex) in v.goodsList" :key="subindex" @click="jumpDetail('brand')">
+          <img :src="subitem.url" alt="">
         </div>
       </div>
     </div>
@@ -114,7 +127,7 @@ export default {
         {
           color: '#FF69B4',
           icon: 'icon-31_xinpin',
-          title: '推荐店铺',
+          title: '推荐商品',
           goodsList: [
             {
               url:'http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg',
@@ -130,27 +143,40 @@ export default {
               retail_price:'59'
             }
           ]
-        },
+        }
+      ],
+      brandList: [
         {
           color: '#f2270c',
           icon:'.icon-hot',
-          title: '推荐商品',
+          title: '推荐品牌',
           goodsList: [
               {
-              url:'http://www.sbn.shop/images/201812/thumb_img/10655_thumb_G_1544730403475.jpg',
+              url:'http://shop.029-smart.com/upload/brand/a7da11fb-7d22-42e3-978a-69b833803219.jpg',
               name:'晨光签字笔12支',
               retail_price:'59'
             },{
-              url:'http://www.sbn.shop/images/201801/thumb_img/4462_thumb_G_1515625311762.jpg',
+              url:'http://shop.029-smart.com/upload/brand/257b0bbc-d07c-4d49-bcf0-5393a34d1299.jpg',
               name:'得力9375薄型复写纸(蓝)(25.5*18.5cm)-16K',
               retail_price:'59'
             },{
-              url:'http://www.sbn.shop/images/201812/thumb_img/10655_thumb_G_1544730403475.jpg',
+              url:'http://shop.029-smart.com/upload/brand/0ffed031-864a-4e89-b7dc-05853ddfd599.jpg',
               name:'晨光签字笔12支',
               retail_price:'59'
+            },{
+              url:'http://shop.029-smart.com/upload/brand/adb5dacd-def9-4b4e-a670-63265ee9129e.jpg'
+            },{
+              url:'http://shop.029-smart.com/upload/brand/057ae5aa-4b79-4c99-9974-fc80ac1e4889.jpg'
+            },{
+              url:'http://shop.029-smart.com/upload/brand/2df181a9-df2f-429d-96f2-d3f9e81dfd5d.jpg'
+            },{
+              url:'http://shop.029-smart.com/upload/brand/60098b9f-b7d4-406d-95ee-8904d6b95ff5.jpg'
+            },{
+              url:'http://shop.029-smart.com/upload/brand/257b0bbc-d07c-4d49-bcf0-5393a34d1299.jpg'
             }
           ]
-        }],
+        }
+      ],
       content: [
         {
           color: '#FF69B4',
@@ -317,7 +343,12 @@ export default {
     },
     gotoList() {},
     // 跳转到商品详情
-    jumpDetail() {
+    jumpDetail(item) {
+      if(item=='brand') {
+        wx.navigateTo({
+          url: '/pages/store/main'
+        })
+      }
       wx.navigateTo({
         url: '/pages/good/main'
       })
@@ -470,6 +501,21 @@ export default {
     .no {
       color: #f2270c;
       font-size: 30rpx;
+    }
+  }
+  .brand-sublist {
+    display: flex;
+    flex-wrap: wrap;
+    div {
+      width: 25%;
+      padding: 20rpx;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 204rpx;
+        height: 72rpx;
+      }
     }
   }
   .icons-recommend {
