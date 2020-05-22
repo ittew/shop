@@ -40,6 +40,18 @@
         <p>{{item.name}}</p>
       </div>
     </div>
+    <!-- 推荐品牌 -->
+    <div class="contentList grayLine" v-for="(v,i) in brandList" :key="i">
+      <div class="barTitle">
+        <div class="Title-left"><span class="icons-recommend" :class="v.icon" :style="{color:v.color}"></span><span class="title-content">{{v.title}}</span></div>
+        <div class="Title-right" @tap="gotoList">查看全部<img src="/static/images/right-arrow.png" alt=""></div>
+      </div>
+      <div class="brand-sublist">
+        <div v-for="(subitem, subindex) in v.goodsList" :key="subindex" @click="jumpDetail('brand')">
+          <img :src="subitem.url" alt="">
+        </div>
+      </div>
+    </div>
     <!-- 推荐商品 -->
     <div class="contentList grayLine" v-for="(v,i) in recommdContent" :key="i">
       <div class="barTitle">
@@ -51,18 +63,6 @@
           <img :src="subitem.url" alt="">
           <p class="ellipsis-two">{{subitem.name}}</p>
           <p>￥{{subitem.retail_price}}</p>
-        </div>
-      </div>
-    </div>
-    <!-- 推荐品牌 -->
-    <div class="contentList grayLine" v-for="(v,i) in brandList" :key="i">
-      <div class="barTitle">
-        <div class="Title-left"><span class="icons-recommend" :class="v.icon" :style="{color:v.color}"></span><span class="title-content">{{v.title}}</span></div>
-        <div class="Title-right" @tap="gotoList">查看全部<img src="/static/images/right-arrow.png" alt=""></div>
-      </div>
-      <div class="brand-sublist">
-        <div v-for="(subitem, subindex) in v.goodsList" :key="subindex" @click="jumpDetail('brand')">
-          <img :src="subitem.url" alt="">
         </div>
       </div>
     </div>
@@ -149,7 +149,7 @@ export default {
         {
           color: '#f2270c',
           icon:'.icon-hot',
-          title: '推荐品牌',
+          title: '推荐店铺',
           goodsList: [
               {
               url:'http://shop.029-smart.com/upload/brand/a7da11fb-7d22-42e3-978a-69b833803219.jpg',
@@ -341,7 +341,11 @@ export default {
         url: '/pages/newdetail/main'
       })
     },
-    gotoList() {},
+    gotoList() {
+      wx.navigateTo({
+        url: '/pages/brandList/main'
+      })
+    },
     // 跳转到商品详情
     jumpDetail(item) {
       if(item=='brand') {
