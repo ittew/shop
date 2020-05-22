@@ -152,27 +152,11 @@ export default {
           title: '推荐店铺',
           goodsList: [
               {
-              url:'http://shop.029-smart.com/upload/brand/a7da11fb-7d22-42e3-978a-69b833803219.jpg',
-              name:'晨光签字笔12支',
-              retail_price:'59'
-            },{
-              url:'http://shop.029-smart.com/upload/brand/257b0bbc-d07c-4d49-bcf0-5393a34d1299.jpg',
-              name:'得力9375薄型复写纸(蓝)(25.5*18.5cm)-16K',
-              retail_price:'59'
-            },{
-              url:'http://shop.029-smart.com/upload/brand/0ffed031-864a-4e89-b7dc-05853ddfd599.jpg',
-              name:'晨光签字笔12支',
-              retail_price:'59'
-            },{
-              url:'http://shop.029-smart.com/upload/brand/adb5dacd-def9-4b4e-a670-63265ee9129e.jpg'
-            },{
-              url:'http://shop.029-smart.com/upload/brand/057ae5aa-4b79-4c99-9974-fc80ac1e4889.jpg'
-            },{
-              url:'http://shop.029-smart.com/upload/brand/2df181a9-df2f-429d-96f2-d3f9e81dfd5d.jpg'
-            },{
-              url:'http://shop.029-smart.com/upload/brand/60098b9f-b7d4-406d-95ee-8904d6b95ff5.jpg'
+              url:'http://shop.029-smart.com/upload/brand/a7da11fb-7d22-42e3-978a-69b833803219.jpg'
             },{
               url:'http://shop.029-smart.com/upload/brand/257b0bbc-d07c-4d49-bcf0-5393a34d1299.jpg'
+            },{
+              url:'http://shop.029-smart.com/upload/brand/0ffed031-864a-4e89-b7dc-05853ddfd599.jpg'
             }
           ]
         }
@@ -195,6 +179,18 @@ export default {
               url:'http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg',
               name:'惠普（HP）CH563Z 802 黑色墨盒',
               retail_price:'59'
+            },{
+              url:'http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg',
+              name:'惠普（HP）CH563Z 802 黑色墨盒',
+              retail_price:'59'
+            },{
+              url:'http://www.sbn.shop/images/201908/thumb_img/10772_thumb_G_1564595802738.jpg',
+              name:'扬帆耐立打印机碳粉YFHC',
+              retail_price:'59'
+            },{
+              url:'http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg',
+              name:'惠普（HP）CH563Z 802 黑色墨盒',
+              retail_price:'59'
             }
           ]
         },
@@ -203,7 +199,19 @@ export default {
           icon:'icon-tuijian',
           title: '移动办公',
           goodsList: [
-             {
+            {
+              url:'http://www.sbn.shop/images/201812/thumb_img/10655_thumb_G_1544730403475.jpg',
+              name:'晨光签字笔12支',
+              retail_price:'59'
+            },{
+              url:'http://www.sbn.shop/images/201801/thumb_img/4462_thumb_G_1515625311762.jpg',
+              name:'得力9375薄型复写纸(蓝)(25.5*18.5cm)-16K',
+              retail_price:'59'
+            },{
+              url:'http://www.sbn.shop/images/201812/thumb_img/10655_thumb_G_1544730403475.jpg',
+              name:'晨光签字笔12支',
+              retail_price:'59'
+            },{
               url:'http://www.sbn.shop/images/201812/thumb_img/10655_thumb_G_1544730403475.jpg',
               name:'晨光签字笔12支',
               retail_price:'59'
@@ -270,6 +278,10 @@ export default {
               name:'爱普生长焦投影机教学会议型CB-2042',
               retail_price:'59'
             }, {
+              url:'http://www.sbn.shop/images/201807/thumb_img/9578_thumb_G_1530731976148.jpg',
+              name:'宏碁（Acer）TMP249 14英寸便携商务办公高清手提电脑',
+              retail_price:'59'
+            },{
               url:'http://www.sbn.shop/images/201807/thumb_img/9578_thumb_G_1530731976148.jpg',
               name:'宏碁（Acer）TMP249 14英寸便携商务办公高清手提电脑',
               retail_price:'59'
