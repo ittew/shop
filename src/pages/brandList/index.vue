@@ -6,14 +6,14 @@
         <input placeholder="请输入品牌名称">
     </div>
     <div class="right_Letter">
-      <div class="Letter_list" v-for="(item,index) in brandData" :key="index" @click="addClassName(index,item.letter)" :class="{active:index == thatnum}">{{item.letter}}</div>
+      <div class="Letter_list" v-for="(item,index) in brandData" :key="index" @click="addClassName(index,item.first_word)" :class="{active:index == thatnum}">{{item.first_word}}</div>
     </div>
 
     <scroll-view class="longinPage_scroll"  :scroll-y="true" @scroll="scroll" :scroll-into-view="toView" :scroll-with-animation="true">
-      <div class="Letter_city" v-for="(item,index) in brandData" :key="index" :id="item.letter" @click="jumpToList(item)">
-        <div class="Letter_title">{{item.letter}}</div>
+      <div class="Letter_city" v-for="(item,index) in brandData" :key="index" :id="item.first_word" @click="jumpToList(item)">
+        <div class="Letter_title">{{item.first_word}}</div>
         <div v-for="(item2,index2) in item.childArr" :key="index2" class="letter-list">
-          <img :src="item2.img" alt="">
+          <img :src="item2.brandLogo" alt="">
           <div class="brand-name">{{item2.name}}</div>
         </div>
       </div>
@@ -28,93 +28,7 @@ import { request } from "../../utils"
 export default {
   data () {
     return {
-      brandData: [{
-      "letter": "A",
-      "childArr": [{
-        "linkageid": 110000,
-        "letter": "p",
-        "name": "苹果",
-        "img": 'http://shop.029-smart.com/upload/brand/aca784fb-87de-413c-b1ae-b11b3f630883.jpg'
-        }]
-      },{
-      "letter": "B",
-      "childArr": [{
-        "linkageid": 110000,
-        "letter": "B",
-        "name": "戴尔",
-        "img": "http://shop.029-smart.com/upload/brand/257b0bbc-d07c-4d49-bcf0-5393a34d1299.jpg"
-        },{
-        "linkageid": 110000,
-        "letter": "B",
-        "name": "德峰",
-        "img": "http://shop.029-smart.com/upload/brand/a7da11fb-7d22-42e3-978a-69b833803219.jpg"
-        }]
-      },{
-      "letter": "C",
-      "childArr": [{
-        "linkageid": 110000,
-        "letter": "C",
-        "name": "戴尔",
-        "img": "http://shop.029-smart.com/upload/brand/257b0bbc-d07c-4d49-bcf0-5393a34d1299.jpg"
-        },{
-        "linkageid": 110000,
-        "letter": "C",
-        "name": "德峰",
-        "img": "http://shop.029-smart.com/upload/brand/a7da11fb-7d22-42e3-978a-69b833803219.jpg"
-        }]
-      },{
-      "letter": "D",
-      "childArr": [{
-        "linkageid": 110000,
-        "letter": "D",
-        "name": "戴尔",
-        "img": "http://shop.029-smart.com/upload/brand/257b0bbc-d07c-4d49-bcf0-5393a34d1299.jpg"
-        },{
-        "linkageid": 110000,
-        "letter": "D",
-        "name": "德峰",
-        "img": "http://shop.029-smart.com/upload/brand/a7da11fb-7d22-42e3-978a-69b833803219.jpg"
-        }]
-      },{
-      "letter": "E",
-      "childArr": [{
-        "linkageid": 110000,
-        "letter": "E",
-        "name": "戴尔",
-        "img": "http://shop.029-smart.com/upload/brand/257b0bbc-d07c-4d49-bcf0-5393a34d1299.jpg"
-        },{
-        "linkageid": 110000,
-        "letter": "E",
-        "name": "德峰",
-        "img": "http://shop.029-smart.com/upload/brand/a7da11fb-7d22-42e3-978a-69b833803219.jpg"
-        }]
-      },{
-      "letter": "F",
-      "childArr": [{
-        "linkageid": 110000,
-        "letter": "F",
-        "name": "戴尔",
-        "img": "http://shop.029-smart.com/upload/brand/257b0bbc-d07c-4d49-bcf0-5393a34d1299.jpg"
-        },{
-        "linkageid": 110000,
-        "letter": "F",
-        "name": "德峰",
-        "img": "http://shop.029-smart.com/upload/brand/a7da11fb-7d22-42e3-978a-69b833803219.jpg"
-        }]
-      },{
-      "letter": "G",
-      "childArr": [{
-        "linkageid": 110000,
-        "letter": "G",
-        "name": "戴尔",
-        "img": "http://shop.029-smart.com/upload/brand/257b0bbc-d07c-4d49-bcf0-5393a34d1299.jpg"
-        },{
-        "linkageid": 110000,
-        "letter": "G",
-        "name": "德峰",
-        "img": "http://shop.029-smart.com/upload/brand/a7da11fb-7d22-42e3-978a-69b833803219.jpg"
-        }]
-      }],
+      brandData: [],
       hotCity:[],
       thatnum: 0,
       scrollTop:0,
@@ -126,19 +40,40 @@ export default {
     this.getBrands()
   },
   methods: {
+    /**
+     * 对数据进行排序和重组
+     * @param val 要排序和处理的数据
+     */
+    handlleData(val) {
+      val.sort((a,b) => {
+        // var textA = a.first_word.toUpperCase();
+        // var textB = b.first_word.toUpperCase();
+        // return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+        return a.first_word.localeCompare(b.first_word)
+      })
+      let dataInfo = {};
+      val.forEach((item, index) => {
+        let { first_word } = item;
+        if (!dataInfo[first_word]) {
+          dataInfo[first_word] = {
+            first_word,
+            childArr: []
+          }
+        }
+        dataInfo[first_word].childArr.push(item);
+      });
+      let data = Object.values(dataInfo); // list 转换成功的数据
+      return data
+    },
     // 获取品牌列表数据
     async getBrands () {
       let data = {}
       let url = '/goodsBrands.htm'
       let body = await request(url, 'post', data)
       if (body.success) {
-        this.brandData = body.data
-        console.log('brandData::')
-        console.log(this.brandData)
+        this.brandData = this.handlleData(body.data)
+        // console.log(this.brandData)
       }
-    },
-    scroll(e) {
-      // console.log(e.mp.detail.scrollTop)
     },
     addClassName (index,id) {
       wx.showToast({
@@ -148,18 +83,15 @@ export default {
       })
       this.thatnum = index;
       for (let i = 0; i < this.brandData.length; ++i) {
-        if (this.brandData[i].letter == id) {
-          this.toView= this.brandData[i].letter
-          // console.log(this.toView)
+        if (this.brandData[i].first_word == id) {
+          this.toView= this.brandData[i].first_word
           break
         }
       }
     },
     jumpToList(val) {
-       wx.showToast({
-        title: val.letter+'跳转',
-        icon: 'none',
-        duration: 2000
+      wx.navigateTo({
+        url: '/pages/list/main'
       })
     }
   }
