@@ -12,7 +12,7 @@
       <swiper class="swiper-container" @change="swiperChange" autoplay="true" interval="3000" circular="true" duration="500">
         <block v-for="(item, index) in banner" :key="index" >
           <swiper-item class="swiper-item">
-            <image :src="item" class="slide-image" />
+            <image :src="item.ad_acc" class="slide-image" />
           </swiper-item>
         </block>
       </swiper>
@@ -28,7 +28,7 @@
       <swiper class="swiper-container " vertical autoplay="true" interval="3000" circular="true" duration="500">
         <block v-for="(item, index) in hotData" :key="index" >
           <swiper-item class="swiper-item" @click="jumpNewDetail">
-            <div class="item ellipsis">{{item}}</div>
+            <div class="item ellipsis">{{item.title}}</div>
           </swiper-item>
         </block>
       </swiper>
@@ -46,8 +46,8 @@
         <div class="Title-left"><span class="icons-recommend" :class="v.icon" :style="{color:v.color}"></span><span class="title-content">{{v.title}}</span></div>
       </div>
       <div class="brand-sublist">
-        <div v-for="(subitem, subindex) in v.goodsList" :key="subindex" @click="jumpDetail('brand')">
-          <img :src="subitem.url" alt="">
+        <div v-for="(subitem, subindex) in brandgoodsList" :key="subindex" @click="jumpDetail('brand')">
+          <img :src="subitem.ad_acc" alt="">
         </div>
       </div>
     </div>
@@ -68,14 +68,14 @@
     <!-- 商品内容 -->
     <div class="contentList grayLine" v-for="(v,i) in content" :key="i">
       <div class="barTitle">
-        <div class="Title-left"><span class="no">{{i+1}}</span><span class="icons icon-caidanlan"></span><span class="title-content">{{v.title}}</span></div>
+        <div class="Title-left"><span class="no">{{i+1}}</span><span class="icons icon-caidanlan"></span><span class="title-content">{{v.gf_name}}</span></div>
         <div class="Title-right" @tap="gotoList">查看全部<img src="/static/images/right-arrow.png" alt=""></div>
       </div>
       <div class="sublist">
-        <div v-for="(subitem, subindex) in v.goodsList" :key="subindex" @click="jumpDetail">
-          <img :src="subitem.url" alt="">
-          <p class="ellipsis-two">{{subitem.name}}</p>
-          <p>￥{{subitem.retail_price}}</p>
+        <div v-for="(subitem, subindex) in v.goods" :key="subindex" @click="jumpDetail">
+          <img :src="subitem.goods_main_photo" alt="">
+          <p class="ellipsis-two">{{subitem.goods_name}}</p>
+          <p>￥{{subitem.store_price}}<span>￥{{subitem.goods_price}}</span></p>
         </div>
       </div>
     </div>
@@ -88,18 +88,13 @@
 </template>
 
 <script>
+import { request } from "../../utils"
 export default {
   data () {
     return {
       swiperCurrent: 0,
-      banner: [
-        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588334928377&di=4459f41b31641fcb6396e05cdb26b638&imgtype=0&src=http%3A%2F%2Fimg3.imgtn.bdimg.com%2Fit%2Fu%3D1465624788%2C2344864837%26fm%3D214%26gp%3D0.jpg',
-        'https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2193748227,3257246483&fm=26&gp=0.jpg',
-        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588334971812&di=d63eeb5deb9ee52b1bb4cc35bd60307d&imgtype=0&src=http%3A%2F%2Fmy.dabangong.com%2Fimages%2F201501%2Fgoods_img%2F4247_P_1422167830200.jpg',
-        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1588335011823&di=e029ad038155e81e40141036243682b4&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201708%2F25%2F20170825101131_JSMer.jpeg',
-        'http://img1.imgtn.bdimg.com/it/u=2565047914,1661736801&fm=26&gp=0.jpg'
-      ],
-      hotData: ['5G新基建如何激活万亿市场？','5G领衔新基建，网络建设走在前——我国5G网络建设分析','5G“新基建”，新场景、新模式'],
+      banner: [], // 轮播图数据
+      hotData: [], // 资讯数据
       iconList: [
         {
           id: 0,
@@ -129,21 +124,22 @@ export default {
           title: '推荐商品',
           goodsList: [
             {
-              url:'http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg',
+              url:'http://shop.029-smart.com/upload/store/32776/2020/05/10/f89df24c-6781-42b9-8f43-11287e7c6771.png_middle.png',
               name:'惠普（HP）CH563Z 802 黑色墨盒',
               retail_price:'59'
             },{
-              url:'http://www.sbn.shop/images/201908/thumb_img/10772_thumb_G_1564595802738.jpg',
+              url:'http://shop.029-smart.com/upload/store/32776/2020/05/10/5fd0b7f2-7e20-49d6-b732-4c21f48c45c2.png_middle.png',
               name:'扬帆耐立打印机碳粉YFHC',
               retail_price:'59'
             },{
-              url:'http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg',
+              url:'http://shop.029-smart.com/upload/store/32777/2020/05/10/35cd0db2-d7f4-4e1e-86a4-eb7f71a0c0d1.png_middle.png',
               name:'惠普（HP）CH563Z 802 黑色墨盒',
               retail_price:'59'
             }
           ]
         }
       ],
+      brandgoodsList:[],
       brandList: [
         {
           color: '#f2270c',
@@ -324,7 +320,68 @@ export default {
 
   components: {},
 
+  mounted: function() {
+    // 获取轮播图数据
+    this.getSlideshow()
+    // 获取资讯数据
+    this.getNewlist()
+    // 获取推荐商家数据
+    this.getRecommendshops()
+    // 获取盖楼数据
+    this.getFloorlist()
+  },
+
   methods: {
+    // 获取盖楼数据
+    async getFloorlist () {
+      let data = {}
+      let url = '/floorList.htm'
+      let body = await request(url, 'post', data)
+      if (body.success) {
+        this.content = body.data
+        console.log('content::')
+        console.log(this.content)
+      }
+    },
+    // 获取资讯数据
+    async getNewlist () {
+      let data = {
+        'cat_id': '1'// id写死  固定  用于获取资讯数据
+      }
+      let url = '/newsList.htm'
+      let body = await request(url, 'get', data)
+      if (body.success) {
+        this.hotData = body.data
+        console.log('hotData::')
+        console.log(this.hotData)
+      }
+    },
+    // 获取推荐商家数据
+    async getRecommendshops () {
+      let data = {
+        'id': '262158' // id写死  固定  用于获取推荐商家数据
+      }
+      let url = '/advertInvoke.htm'
+      let body = await request(url, 'get', data)
+      if (body.success) {
+        this.brandgoodsList = body.data.advs
+        console.log('brandList::')
+        console.log(this.brandgoodsList)
+      }
+    },
+    // 获取轮播图数据
+    async getSlideshow () {
+      let data = {
+        'id': '262157'// id写死  固定 用于获取轮播图数据
+      }
+      let url = '/advertInvoke.htm'
+      let body = await request(url, 'get', data)
+      if (body.success) {
+        this.banner = body.data.advs
+        console.log('banner::')
+        console.log(this.banner)
+      }
+    },
     swiperChange(e) {
       this.swiperCurrent = e.mp.detail.current
     },
@@ -468,7 +525,7 @@ export default {
     }
     .icon-laba {
       color:#f2270c;
-      margin: 10rpx 6rpx 0 0;
+      margin: 10rpx 12rpx 0 0;
       font-size: 40rpx;
     }
     .item {
@@ -600,9 +657,14 @@ export default {
 
       p:nth-child(3) {
         padding-left: 14rpx;
-        font-size: 30rpx;
-        font-weight: bold;
+        font-size: 26rpx;
         color: #f2270c;
+        span {
+          padding-left: 14rpx;
+          font-size: 22rpx;
+          color: #666;
+          text-decoration: line-through;
+        }
       }
     }
   }

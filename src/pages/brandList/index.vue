@@ -24,7 +24,7 @@
 </template>
 
 <script>
-
+import { request } from "../../utils"
 export default {
   data () {
     return {
@@ -122,8 +122,21 @@ export default {
     }
   },
   mounted() {
+    // 获取品牌列表数据
+    this.getBrands()
   },
   methods: {
+    // 获取品牌列表数据
+    async getBrands () {
+      let data = {}
+      let url = '/goodsBrands.htm'
+      let body = await request(url, 'post', data)
+      if (body.success) {
+        this.brandData = body.data
+        console.log('brandData::')
+        console.log(this.brandData)
+      }
+    },
     scroll(e) {
       // console.log(e.mp.detail.scrollTop)
     },

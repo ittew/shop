@@ -23,7 +23,7 @@ export function formatTime(date) {
 const host = "http://shop.029-smart.com";
 export { host };
 //请求封装
-function request(url, method, data, header = {}) {
+export function request(url, method, data, header = {}) {
   wx.showLoading({
     title: "加载中" //数据请求前loading
   });
