@@ -27,7 +27,7 @@
         </swiper>
         <div class="dots">
           <div v-for="(v,i) in banner" :key="i">
-            <div class="dotsItem" :class="i == swiperCurrent ? ' dotActive' : ''"></div>
+            <div class="dotsItem" :class="{'dotActive':i == swiperCurrent}"></div>
           </div>
         </div>
       </div>
@@ -161,6 +161,9 @@ export default {
     }
   },
   methods: {
+    swiperChange(e) {
+      this.swiperCurrent = e.mp.detail.current
+    },
     changeTab(index){
       this.curIndex = index
       if (index == 2) {
