@@ -22,6 +22,16 @@ export function formatTime(date) {
 
 const host = "http://www.sbnws.cn";
 export { host };
+/**
+ * 获取url字符串
+ */
+export function getQuery() {
+  /* 获取当前路由栈数组 */
+  const pages = getCurrentPages()
+  const currentPage = pages[pages.length - 1]
+  const options = currentPage.options
+  return options
+}
 //请求封装
 export function request(url, method, data, header = {}) {
   wx.showLoading({

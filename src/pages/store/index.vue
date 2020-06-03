@@ -169,7 +169,7 @@ export default {
       if (index == 2) {
         // 跳转分类
         wx.navigateTo({
-          url: "/pages/sortlist/main"
+          url: "/pages/sortlist/main?id=32777"
         })
       }
     },

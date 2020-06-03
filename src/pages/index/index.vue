@@ -47,7 +47,7 @@
       </div>
       <div class="brand-sublist">
         <div v-for="(subitem, subindex) in brandgoodsList" :key="subindex" @click="jumpDetail('brand')">
-          <img :src="subitem.ad_acc" alt="">
+          <img :src="subitem.store_logo" alt="">
         </div>
       </div>
     </div>
@@ -358,13 +358,11 @@ export default {
     },
     // 获取推荐商家数据
     async getRecommendshops () {
-      let data = {
-        'id': '262158' // id写死  固定  用于获取推荐商家数据
-      }
-      let url = '/advertInvoke.htm'
+      let data = {}
+      let url = '/recommendStores.htm'
       let body = await request(url, 'get', data)
       if (body.success) {
-        this.brandgoodsList = body.data.advs
+        this.brandgoodsList = body.data
         console.log('brandList::')
         console.log(this.brandgoodsList)
       }

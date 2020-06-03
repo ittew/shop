@@ -2,11 +2,11 @@
   <div class="sortlist">
     <div class="sort_con" v-for="(item, index) of sortList" :key="index">
       <div class="sort_li">
-        {{item.childs[index].className}}
+        {{item.className}}
         <span class="sorty icon-youjiantou"></span>
       </div>
-      <div class="sublist" v-if="item.childs[index].childs">
-        <span class="sublist_li" v-for="(it, ind) in item.childs[index].childs" :key="ind">
+      <div class="sublist" v-if="item.childs">
+        <span class="sublist_li" v-for="(it, ind) in item.childs" :key="ind">
           {{it.className}}
         </span>
       </div>
@@ -15,17 +15,21 @@
 </template>
 
 <script>
-import { request } from "../../utils";
+import { request, getQuery } from "../../utils";
 export default {
   data () {
     return {
+      shopid: '',
       sortList: []
     }
   },
 
   components: {},
 
-  onLoad: function() {
+  mounted () {
+    if (getQuery()['id']) {
+      this.shopid = getQuery()['id']
+    }
     // 获取商品类型
     this.getTypelist()
   },
@@ -33,8 +37,10 @@ export default {
   methods: {
     // 获取商品类型 接口不对，测试用，应调用商家分类接口
     async getTypelist() {
-      let data = {}
-      let url = '/goodsCates.htm'
+      let data = {
+        'id': this.shopid // id 商铺对应的id  固定  用于获取商家分类数据
+      }
+      let url = '/storeGoodsClass.htm'
       let body = await request(url, 'get', data)
       if (body.success) {
         this.sortList = body.data
