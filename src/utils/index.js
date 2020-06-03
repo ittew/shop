@@ -20,7 +20,7 @@ export function formatTime(date) {
 
 //-------------------------------------------------------------------------请求的封装
 
-const host = "http://shop.029-smart.com";
+const host = "http://www.sbnws.cn";
 export { host };
 //请求封装
 export function request(url, method, data, header = {}) {
