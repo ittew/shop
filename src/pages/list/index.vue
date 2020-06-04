@@ -11,22 +11,31 @@
       <div class="navigate-item" v-for="(item,index) in navTitle" :key="index">
         <div class="names"  @tap="handleClick(index)">
           <span :class="currentTab === index ? 'active' : ''">{{item.title}}</span>
-          <span v-if="index==3" class="icon-xia icons"></span>
+          <span :class="currentTab === index ? 'active' : ''" v-if="index==3&&isShow" class="icon-shangjiantou-cu icons"></span>
+          <span :class="currentTab === index ? 'active' : ''" v-if="index==3&&!isShow" class="icon-xia icons"></span>
         </div>
       </div>
     </div>
     <div class="sublist">
-      <div v-for="(subitem, subindex) in goodsList" :key="subindex" @click="jumpDetail">
-        <img :src="subitem.url" alt="">
-        <p class="ellipsis-two">{{subitem.name}}</p>
-        <p>￥{{subitem.retail_price}}</p>
+        <!-- {{goodsList}} -->
+      <div v-for="(subitem, subindex) in goodsList" :key="subindex" @click="jumpDetail" class="good-desc">
+        <img :src="subitem.d_goods.goods_main_photo" class="good-img" alt="">
+        <p class="ellipsis-two title">{{subitem.d_goods.goods_name}}</p>
+        <div class="price">
+          <p class="dis-price">￥{{subitem.d_goods.goods_current_price}}</p>
+          <p class="old-price">市场价:￥{{subitem.d_goods.goods_price}}</p>
+        </div>
+        <div class="presentation">
+          <p class="ellipsis-two pre-desc"><span class="pre-title">赠品:</span>{{subitem.d_delivery_goods.goods_name}}</p>
+          <!-- <img :src="subitem.url" alt="" class=""> -->
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
+import { request } from "../../utils"
 export default {
   data() {
     return {
@@ -34,65 +43,68 @@ export default {
       navTitle: [
         {title: '综合'},
         {title: '销量'},
-        {title: '新品'},
+        {title: '人气'},
         {title: '价格'}
       ],
-      goodsList: [
-        {
-          url:'http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg',
-          name:'惠普（HP）CH563Z 802 黑色墨盒',
-          retail_price:'59'
-        },{
-          url:'http://www.sbn.shop/images/201908/thumb_img/10772_thumb_G_1564595802738.jpg',
-          name:'扬帆耐立打印机碳粉YFHC',
-          retail_price:'59'
-        },{
-          url:'http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg',
-          name:'惠普（HP）CH563Z 802 黑色墨盒',
-          retail_price:'59'
-        },{
-          url:'http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg',
-          name:'惠普（HP）CH563Z 802 黑色墨盒',
-          retail_price:'59'
-        },{
-          url:'http://www.sbn.shop/images/201908/thumb_img/10772_thumb_G_1564595802738.jpg',
-          name:'扬帆耐立打印机碳粉YFHC',
-          retail_price:'59'
-        },{
-          url:'http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg',
-          name:'惠普（HP）CH563Z 802 黑色墨盒',
-          retail_price:'59'
-        },{
-          url:'http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg',
-          name:'惠普（HP）CH563Z 802 黑色墨盒',
-          retail_price:'59'
-        },{
-          url:'http://www.sbn.shop/images/201908/thumb_img/10772_thumb_G_1564595802738.jpg',
-          name:'扬帆耐立打印机碳粉YFHC',
-          retail_price:'59'
-        },{
-          url:'http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg',
-          name:'惠普（HP）CH563Z 802 黑色墨盒',
-          retail_price:'59'
-        },{
-          url:'http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg',
-          name:'惠普（HP）CH563Z 802 黑色墨盒',
-          retail_price:'59'
-        },{
-          url:'http://www.sbn.shop/images/201908/thumb_img/10772_thumb_G_1564595802738.jpg',
-          name:'扬帆耐立打印机碳粉YFHC',
-          retail_price:'59'
-        },{
-          url:'http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg',
-          name:'惠普（HP）CH563Z 802 黑色墨盒',
-          retail_price:'59'
-        }
-      ]
+      isShow: true,
+      highPrice: true,
+      goodsList:[]
     }
   },
+  mounted() {
+    this.getData()
+  },
   methods: {
+    saleSort(property,desc) {
+      return function (a,b) {
+        var preSales = a["d_goods"][property]
+        var nextSales = b["d_goods"][property]
+        if(desc == false) {
+          return preSales-nextSales // 升序
+        }else {
+          return nextSales-preSales
+        }
+      }
+    },
     handleClick(i) {
       this.currentTab =i
+      switch (i) {
+        case 0:
+          this.getData()
+          this.highPrice = false
+          // console.log(this.goodsList,'0--')
+          break;
+        case 1:
+          this.highPrice = false
+          this.goodsList = this.goodsList.sort(this.saleSort("goods_salenum",this.highSales))
+          console.log(this.highSales,this.goodsList,'1--')
+          break;
+        case 2:
+          this.highPrice = false
+          this.goodsList = this.goodsList.sort(this.saleSort("goods_collect",this.hignPopularity))
+          // console.log(this.goodsList,'2--')
+          break;
+        case 3:
+          this.highPrice = !this.highPrice
+          this.isShow = !this.highPrice
+          this.goodsList = this.goodsList.sort(this.saleSort("goods_current_price",this.highPrice))
+          // console.log(this.highPrice,this.goodsList,'3--')
+          break;
+        default:
+          break;
+      }
+      console.log(this.currentTab,'this.currentTab')
+    },
+    // 获取促销列表数据
+    async getData () {
+      console.log(222)
+      let data = {'id':'262158'}
+      let url = '/goodsDelivery.htm'
+      let body = await request(url, 'get', data)
+      if (body.success) {
+        this.goodsList = body.data
+        console.log(this.goodsList,'data')
+      }
     }
   }
 }
@@ -143,7 +155,7 @@ export default {
     }
     .icons {
       position: relative;
-      top: 4rpx;
+      top: -2rpx;
       left: 4rpx;
       font-size: 26rpx;
     }
@@ -158,10 +170,10 @@ export default {
     flex-wrap: wrap;
     padding: 20rpx 15rpx 0;
     background: #ffffff;
-    div {
+    .good-desc {
       width: 228rpx;
       box-sizing: border-box;
-      padding: 6rpx 0;
+      padding: 4rpx 0;
       background: #fff;
       margin: 0 6rpx 12rpx;
       border: 1rpx solid #cdcccc;
@@ -169,28 +181,53 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      img {
+      .good-img {
         display: block;
         width: 200rpx;
         height: 160rpx;
         margin: 0 auto;
       }
 
-      p {
+      .title {
         // text-indent: 1em;
         font-size: 24rpx;
-      }
-
-      p:nth-child(2) {
         padding: 8rpx 20rpx 0;
       }
+      .price {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 14rpx;
 
-      p:nth-child(3) {
-        padding-left: 14rpx;
-        font-size: 30rpx;
-        font-weight: bold;
-        color: #f2270c;
+        .dis-price {
+          font-size: 30rpx;
+          font-weight: bold;
+          color: #f2270c;
+        }
+        .old-price {
+          font-size: 20rpx;
+          color: #999;
+          text-decoration:line-through;
+        }
       }
+      .presentation {
+        padding: 2rpx 14rpx 4rpx;
+        .pre-desc {
+          font-size: 20rpx;
+          color: #666;
+        }
+        .pre-title {
+          font-size: 20rpx;
+          color: #f2270c;
+          padding-right: 8rpx;
+        }
+        img {
+          width: 80rpx;
+          height: 80rpx;
+          border: 2rpx solid #cdcccc;
+        }
+      }
+
     }
   }
 </style>
