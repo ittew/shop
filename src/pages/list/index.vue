@@ -17,7 +17,6 @@
       </div>
     </div>
     <div class="sublist">
-        <!-- {{goodsList}} -->
       <div v-for="(subitem, subindex) in goodsList" :key="subindex" @click="jumpDetail" class="good-desc">
         <img :src="subitem.d_goods.goods_main_photo" class="good-img" alt="">
         <p class="ellipsis-two title">{{subitem.d_goods.goods_name}}</p>
@@ -183,8 +182,8 @@ export default {
       justify-content: center;
       .good-img {
         display: block;
-        width: 200rpx;
-        height: 160rpx;
+        width: 210rpx;
+        height: 210rpx;
         margin: 0 auto;
       }
 
@@ -201,13 +200,13 @@ export default {
 
         .dis-price {
           font-size: 30rpx;
-          font-weight: bold;
           color: #f2270c;
         }
         .old-price {
           font-size: 20rpx;
           color: #999;
           text-decoration:line-through;
+          margin-top: 4rpx;
         }
       }
       .presentation {

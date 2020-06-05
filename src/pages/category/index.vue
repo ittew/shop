@@ -432,7 +432,7 @@ page {
         width: 162rpx;
         height: 90rpx;
         color: #333;
-        font-size: 28rpx;
+        font-size: 30rpx;
         border-left: 6rpx solid #fff;
       }
 
@@ -451,7 +451,7 @@ page {
       height: 100%;
       padding: 20rpx 20rpx 36rpx;
       .right-content {
-        font-size: 28rpx;
+        font-size: 26rpx;
         .right-title {
           display: flex;
           .title-left {
@@ -462,7 +462,7 @@ page {
               border: 1rpx solid #dbdbdb;
               border-radius: 10rpx;
               box-sizing: border-box;
-              padding: 10rpx;
+              padding: 8rpx;
               margin: 10rpx 10rpx 0 0;
             }
             .title-active {
@@ -482,7 +482,7 @@ page {
         .item {
           width: 33.33%;
           text-align: center;
-          font-size: 22rpx;
+          font-size: 24rpx;
           font-weight: 400;
           margin-top: 20rpx;
           img {

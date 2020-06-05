@@ -13,7 +13,7 @@
       <div class="Letter_city" v-for="(item,index) in brandData" :key="index" :id="item.first_word" @click="jumpToList(item)">
         <div class="Letter_title">{{item.first_word}}</div>
         <div v-for="(item2,index2) in item.childArr" :key="index2" class="letter-list">
-          <img :src="item2.brandLogo" alt="">
+          <img src="item2.brandLogo" alt="">
           <div class="brand-name">{{item2.name}}</div>
         </div>
       </div>
@@ -199,13 +199,16 @@ page {
 .letter-list {
   padding-left: 3%;
   display: flex;
+  padding-top: 12rpx;
   img {
-    width: 102rpx;
-    height: 102rpx;
+    width: 196rpx;
+    height: 70rpx;
     border: 2rpx solid #e5e5e5;
-    margin-top:12rpx;
+    border-radius: 10rpx;
   }
   .brand-name {
+    height: 70rpx;
+    font-size: 26rpx;
     display: flex;
     align-items: center;
   }

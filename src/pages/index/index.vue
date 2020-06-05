@@ -75,7 +75,7 @@
         <div v-for="(subitem, subindex) in v.goods" :key="subindex" @click="jumpDetail">
           <img :src="subitem.goods_main_photo" alt="">
           <p class="ellipsis-two">{{subitem.goods_name}}</p>
-          <p>￥{{subitem.store_price}}<span>￥{{subitem.goods_price}}</span></p>
+          <p>￥{{subitem.store_price}}</p>
         </div>
       </div>
     </div>
@@ -657,6 +657,7 @@ export default {
         padding-left: 14rpx;
         font-size: 26rpx;
         color: #f2270c;
+        font-weight: bold;
         span {
           padding-left: 14rpx;
           font-size: 22rpx;

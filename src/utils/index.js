@@ -21,6 +21,7 @@ export function formatTime(date) {
 //-------------------------------------------------------------------------请求的封装
 
 const host = "http://www.sbnws.cn/api/";
+const token = "mole eyJhbGciOiJIUzUxMiJ9.eyJpZCI6MzI3OTYsIm9wZW5JZCI6IjExMTExMSIsInVzZXJOYW1lIjoic2hlbnFpYW53IiwidHJ1ZU5hbWUiOiLnlLPojJzmlociLCJzdWIiOiIzMjc5NiIsImlhdCI6MTU5MTI2NDk1NiwiZXhwIjoxNTkxODY5NzU2fQ.eNBFm9n8oVWQjInay1LfQSgwKHx90uLJreXHLTg03kwyMu0DSiQBHpCduOrow063QcRQi5_adizSXnJDppe76Q";
 export { host };
 /**
  * 获取url字符串
@@ -43,7 +44,8 @@ export function request(url, method, data, header = {}) {
       method: method,
       data: data,
       header: {
-        "content-type": "application/json" // 默认值
+        "content-type": "application/json", // 默认值
+        "auth": token //读取token
       },
       success: function(res) {
         wx.hideLoading();
