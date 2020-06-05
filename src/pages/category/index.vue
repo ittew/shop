@@ -9,14 +9,14 @@
     <div class="content">
       <div class="left">
         <div class="iconText" @click="selectitem(item.id,index)" v-for="(item, index) in listData" :class="[index==nowIndex?'active':'']" :key="index">
-        {{item.name}}
+        {{item.className}}
         </div>
       </div>
       <scroll-view class="right" scroll-y="true">
           <div class="right-content">
             <div class="right-title">
               <div class="title-left">
-                <div class="title-info"  :class="{'title-active': index==titleIndex}" @click="changeProduct(index)" v-for="(item,index) in currentTitle" :key="index">{{item.name}}</div>
+                <div class="title-info" :class="{'title-active': index==titleIndex}" @click="changeProduct(item.id, index)" v-for="(item,index) in currentTitle" :key="index">{{item.className}}</div>
               </div>
               <div class="title-more" @click="showMore">
                 <span v-if="!flag" class="icon-xia"></span>
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-
+import { post } from "../../utils"
 export default {
   data() {
     return {
@@ -289,44 +289,53 @@ export default {
     }
   },
   beforeMount() {
-    this.currentList = this.detailData[0].data[0].list
-    this.showMoreData(0)
+    // this.currentList = this.detailData[0].data[0].list
+  },
+  mounted () {
+    this.getGoodsCates()
   },
   methods: {
     // 点击更多，title的数量展示
     showMoreData(i) {
-      this.oldArr = this.detailData[i].data.slice(0)
-      if(this.detailData[i].data.length>=3) {
+      this.oldArr = this.listData[i].childs.slice(0)
+      if(this.listData[i].childs.length >= 3) {
         this.oldArr.splice(3)
         this.currentTitle = this.oldArr
+        console.log(this.titleIndex, 'currentTitle')
+        console.log(this.currentTitle)
+        console.log(this.currentTitle[this.titleIndex].id, 'id')
+        this.getGoodsByCateId(this.currentTitle[this.titleIndex].id)
       }else {
-        this.currentTitle = this.detailData[i].data
+        this.currentTitle = this.listData[i].childs
+        console.log(this.titleIndex, 'currentTitle')
+        console.log(this.currentTitle)
+        console.log(this.currentTitle[this.titleIndex].id, 'id')
+        this.getGoodsByCateId(this.currentTitle[this.titleIndex].id)
       }
     },
     tosearch(index, id) {
       // wx.navigateTo({ url: "/pages/search/main" });
     },
     selectitem(id, index) {
-      this.nowIndex = index;
+      this.nowIndex = index
       this.titleIndex = 0
-      // this.currentTitle = this.detailData[index].data
-      this.currentList = this.detailData[index].data[index].list
+      this.currentTitle = this.listData[index].childs
       this.flag = false
-      this.showMoreData(index)
+      this.showMoreData(index, id)
     },
     // 展示更多
     showMore() {
       this.flag = !this.flag
       if(this.flag) {
-        this.currentTitle = this.detailData[0].data
+        this.currentTitle = this.listData[this.nowIndex].childs
       }else{
         this.currentTitle = this.oldArr
       }
-      // console.log(this.flag,this.currentTitle,this.oldArr)
+      console.log(this.flag,this.currentTitle,this.oldArr)
     },
-    changeProduct(index) {
-      this.currentList = this.currentTitle[index].list
+    changeProduct(id, index) {
       this.titleIndex = index
+      this.showMoreData(this.nowIndex, id)
       // console.log(this.titleIndex,index)
     },
     categoryList(id) {
@@ -334,6 +343,33 @@ export default {
       // wx.navigateTo({
       //   url: "../categorylist/main?id=" + id
       // });
+    },
+    // 获取分类数据
+    async getGoodsCates() {
+      let data = {}
+      let url = '/goodsCates.htm'
+      let body = await post(url, data)
+      console.log(body, 'getGoodsCates')
+      if (body.success) {
+        this.listData = body.data
+        this.showMoreData(0)
+        // this.brandData = this.handlleData(body.data)
+        // console.log(this.brandData)
+      }
+    },
+    // 获取二级分类数据
+    async getGoodsByCateId(id) {
+      let data = {
+        gc_id: id
+      }
+      let url = '/goodsByCateId.htm'
+      let body = await post(url, data)
+      console.log(body, 'getGoodsByCateId')
+      if (body.success) {
+        this.listData = body.data
+        // this.brandData = this.handlleData(body.data)
+        // console.log(this.brandData)
+      }
     }
   }
 }
