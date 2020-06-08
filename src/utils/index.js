@@ -20,7 +20,7 @@ export function formatTime(date) {
 
 //-------------------------------------------------------------------------请求的封装
 
-const host = "http://www.sbnws.cn/api/";
+const host = "http://www.sbnws.cn/api";
 const token = "mole eyJhbGciOiJIUzUxMiJ9.eyJpZCI6MzI3OTYsIm9wZW5JZCI6IjExMTExMSIsInVzZXJOYW1lIjoic2hlbnFpYW53IiwidHJ1ZU5hbWUiOiLnlLPojJzmlociLCJzdWIiOiIzMjc5NiIsImlhdCI6MTU5MTI2NDk1NiwiZXhwIjoxNTkxODY5NzU2fQ.eNBFm9n8oVWQjInay1LfQSgwKHx90uLJreXHLTg03kwyMu0DSiQBHpCduOrow063QcRQi5_adizSXnJDppe76Q";
 export { host };
 /**

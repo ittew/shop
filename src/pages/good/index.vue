@@ -5,7 +5,7 @@
     <swiper class="swiper-container" indicator-dots="true" indicator-color="rgba(255,255,255,.3)" indicator-active-color="#f2270c" autoplay="true" interval="3000" duration="500" circular="true">
       <block v-for="(item, index) in gallery " :key="index">
         <swiper-item class="swiper-item">
-          <image :src="item.img_url" class="slide-image" />
+          <image :src="item" class="slide-image" />
         </swiper-item>
       </block>
     </swiper>
@@ -16,10 +16,11 @@
     <div class="head">
       商品参数
     </div>
-    <div v-for="(item,index) in attribute" :key="index" class="item">
+    <wxParse :content="article" @preview="preview" @navigate="navigate" />
+    <!-- <div v-for="(item,index) in attribute" :key="index" class="item">
       <div>{{item.name}}</div>
       <div>{{item.value}}</div>
-    </div>
+    </div> -->
   </div>
   <!-- 商家店铺 -->
   <div class="component_shop">
@@ -84,16 +85,17 @@
 </template>
 
 <script>
-
+import { request, getQuery } from "../../utils";
+import wxParse from 'mpvue-wxparse'
 export default {
+components: {
+  wxParse
+},
 data() {
   return {
-    gallery: [
-      {img_url:'http://yanxuan.nosdn.127.net/9460f6b30661548c4a864607bfcdf4ca.jpg'},
-      {img_url:'http://yanxuan.nosdn.127.net/acbdb480bcad193fad77ef6c4f52192e.jpg'},
-      {img_url:'http://yanxuan.nosdn.127.net/e6feb5f4a0989d212bce068d4907657d.jpg'},
-      {img_url:'http://yanxuan.nosdn.127.net/6059ab6e106d97c29d5723c1d6f1a11f.jpg'}
-    ],
+    article: '<span style="line-height:1.5;background-color:#ffffff;font-family:tahoma, arial, 微软雅黑, sans-serif;color:#666666;">货号:&nbsp;51151847 </span><span style="line-height:1.5;background-color:#ffffff;font-family:tahoma, arial, 微软雅黑, sans-serif;color:#666666;">风格:&nbsp;甜美 </span><span style="line-height:1.5;background-color:#ffffff;font-family:tahoma, arial, 微软雅黑, sans-serif;color:#666666;">材质成分:&nbsp;聚酯纤维100%</span><br /> <span style="line-height:1.5;background-color:#ffffff;font-family:tahoma, arial, 微软雅黑, sans-serif;color:#666666;">组合形式:&nbsp;单件 </span><span style="line-height:1.5;background-color:#ffffff;font-family:tahoma, arial, 微软雅黑, sans-serif;color:#666666;">裙长:&nbsp;短裙 </span><span style="line-height:1.5;background-color:#ffffff;font-family:tahoma, arial, 微软雅黑, sans-serif;color:#666666;">款式:&nbsp;其他/other</span><br /> <span style="line-height:1.5;background-color:#ffffff;font-family:tahoma, arial, 微软雅黑, sans-serif;color:#666666;">袖长:&nbsp;五分袖 </span><span style="line-height:1.5;background-color:#ffffff;font-family:tahoma, arial, 微软雅黑, sans-serif;color:#666666;">领型:&nbsp;圆领 </span><span style="line-height:1.5;background-color:#ffffff;font-family:tahoma, arial, 微软雅黑, sans-serif;color:#666666;">袖型:&nbsp;常规</span><br /> <span style="line-height:1.5;background-color:#ffffff;font-family:tahoma, arial, 微软雅黑, sans-serif;color:#666666;">腰型:&nbsp;宽松腰 </span><span style="line-height:1.5;background-color:#ffffff;font-family:tahoma, arial, 微软雅黑, sans-serif;color:#666666;">衣门襟:&nbsp;套头 </span><span style="line-height:1.5;background-color:#ffffff;font-family:tahoma, arial, 微软雅黑, sans-serif;color:#666666;">裙型:&nbsp;其他</span><br /> <span style="line-height:1.5;background-color:#ffffff;font-family:tahoma, arial, 微软雅黑, sans-serif;color:#666666;">图案:&nbsp;纯色 </span><span style="line-height:1.5;background-color:#ffffff;font-family:tahoma, arial, 微软雅黑, sans-serif;color:#666666;">流行元素/工艺:&nbsp;绣花 </span><span style="line-height:1.5;background-color:#ffffff;font-family:tahoma, arial, 微软雅黑, sans-serif;color:#666666;">品牌:&nbsp;裂帛</span><br /> <span style="line-height:1.5;background-color:#ffffff;font-family:tahoma, arial, 微软雅黑, sans-serif;color:#666666;">适用年龄:&nbsp;25-29周岁</span><br /> <span style="line-height:1.5;background-color:#ffffff;font-family:tahoma, arial, 微软雅黑, sans-serif;color:#666666;">年份季节:&nbsp;2016年夏季</span><br /> <span style="line-height:1.5;background-color:#ffffff;font-family:tahoma, arial, 微软雅黑, sans-serif;color:#666666;">颜色分类:&nbsp;粉色&nbsp;浅蓝色</span><br /> <img src="/upload/store/1/2016/04/04/444ed816-9db0-456d-a28c-fcc7fc900097.jpg" /><img src="/upload/store/1/2016/04/04/7409991b-ff7a-4481-8402-dbead4fc7285.jpg" /><img src="/upload/store/1/2016/04/04/09ab7939-e4df-46fd-aadb-cad2911b2f00.jpg" /><br />',
+    goodid: '98463',
+    gallery: [],
     attribute: [{
       "value": "法国干红",
       "name": "商品名称"
@@ -129,7 +131,39 @@ data() {
     number: 0
   }
 },
+mounted () {
+  if (getQuery()['id']) {
+    this.goodid = getQuery()['id']
+  }
+  // 获取商品详情数据
+  this.getDetail()
+},
 methods: {
+  preview(src, e) {
+    // do something
+  },
+  navigate(href, e) {
+    // do something
+  },
+  // 获取商品详情数据
+  async getDetail() {
+    let data = {
+      'id': this.goodid // id 商品对应的id  用于获取商品详情数据
+    }
+    let url = '/goodsView.htm'
+    let body = await request(url, 'get', data)
+    if (body.success) {
+      this.article = body.good.goods_property
+      console.log("this.attribute")
+      console.log(this.attribute)
+      this.gallery = body.good.goods_photos
+      console.log("this.gallery")
+      console.log(this.gallery)
+      this.attribute = body.good.goods_property
+      console.log("this.attribute")
+      console.log(this.attribute)
+    }
+  },
   // 立即购买-跳转到订单列表
   bug() {
     if (this.showpop) {
@@ -229,6 +263,7 @@ methods: {
 </script>
 
 <style lang="scss">
+@import url("~mpvue-wxparse/src/wxParse.css");
 page {
   background: #f4f4f4;
   height: 100%;
