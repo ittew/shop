@@ -1,26 +1,26 @@
 <template>
   <div class="addaddress">
     <div class="item">
-      <input type="text" placeholder="姓名" v-model="userName">
+      <input type="text" placeholder="姓名" v-model="trueName">
     </div>
     <div class="item">
-      <input type="text" placeholder="手机号码" v-model="telNumber">
+      <input type="text" placeholder="手机号码" v-model="mobile">
     </div>
     <div class="item">
       <picker mode="region" @change="bindRegionChange" :value="region" :custom-item="customItem">
-        <input type="text" placeholder="身份、城市、区县" v-model="address">
+        <input type="text" placeholder="省份、城市、区县" v-model="area_id">
       </picker>
     </div>
     <div class="item">
-      <input type="text" placeholder="详细地址，如楼道、楼盘号等" v-model="detailadress">
+      <input type="text" placeholder="详细地址，如楼道、楼盘号等" v-model="area_info">
     </div>
-    <div class="item itemend">
+    <!-- <div class="item itemend">
       <checkbox-group @change="checkboxChange">
         <label class="checkbox">
           <checkbox class="box" value="true" :checked="checked" color="#B4282D" />设置为默认地址
         </label>
       </checkbox-group>
-    </div>
+    </div> -->
     <div @click="saveAddress" class="bottom">
       保存
     </div>
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-
+import {request,getQuery} from '../../utils/index'
 export default {
   data() {
     return {
@@ -37,61 +37,118 @@ export default {
       id: "",
       openId: "",
       res: {},
-      userName: "",
-      telNumber: "",
-      address: "",
-      detailadress: "",
-      checked: false
+      trueName: "",
+      mobile: "",
+      area_id: [],
+      area_info: "",
+      checked: false,
+      id: ''
+    }
+  },
+  onLoad() {
+    this.clearData()
+    if(getQuery()['id']) {
+      this.id = getQuery()['id']
     }
   },
   methods: {
+    async getData () {
+      console.log(222)
+      // let data = {'store_id':this.id} // 门店IDa
+      // let url = 'card/address.htm'
+      // let body = await request(url, 'get', data)
+      // if (body.success) {
+      //   this.listData = body.data
+      //   console.log(body.data,'data')
+      // }
+    },
+    clearData() {
+      this.trueName = ''
+      this.mobile = ''
+      this.area_id = []
+      this.area_info = ''
+      this.id = ''
+    },
     checkboxChange(e) {
       this.checked = e.mp.detail.value[0];
     },
-    saveAddress() {
-        var _this = this;
-        // var obj = {
-        //   userName: _this.userName,
-        //   telNumber: _this.telNumber,
-        //   address: _this.address,
-        //   detailadress: _this.detailadress,
-        //   checked: _this.checked,
-        //   openId: _this.openId,
-        //   addressId: _this.id
-        // };
-        wx.showToast({
-          title: "添加成功", //提示的内容,
-          icon: "success", //图标,
-          duration: 2000, //延迟时间,
-          mask: true, //显示透明蒙层，防止触摸穿透,
-          success: res => {
-            // wx.navigateBack({
-            //   delta: 1 //返回的页面数，如果 delta 大于现有页面数，则返回到首页,
-            // });
+    bindRegionChange(e) {
+      let details = e.mp.detail.value
+      for(var i=0;i<details.length;i++){
+        if(details[i].indexOf('全部')>=0) {
+          console.log(i,'000')
+          details.splice(i,1)
+          i--
+        }
+      }
+      this.area_id = details
+    },
+    testForm() {
+      // console.log(this.area_id.length,'this.trueName')
+      let result = true
+      let re = /^1\d{10}$/;
+      if(!this.trueName) {
+        result = false
+        this.showToast("请输入收货人姓名")
+      }else if(!/^[\w\u4e00-\u9fa5]+$/g.test(this.trueName)) {
+        result = false
+        this.showToast("收货人包含非法字符")
+      }else if(!this.mobile) {
+        result = false
+        this.showToast("请输入手机号")
+      }else if (!re.test(this.mobile)) {
+        result = false
+        this.showToast("手机号码格式不对，请重新输入")
+      }else if (this.area_id.length<=0) {
+        result = false
+        this.showToast("请选择所在地区")
+      }else if(!this.area_info) {
+        result = false
+        this.showToast("请输入详细地址")
+      }
+      return result
+    },
+    showToast(title) {
+      wx.showToast({
+        title, //提示的内容,
+        icon: "none", //图标,
+        duration: 2000, //延迟时间,
+        mask: true, //显示透明蒙层，防止触摸穿透,
+        success: res => {
+        }
+      });
+    },
+    async saveAddress() {
+        let flag = this.testForm()
+        let data = {
+          id: this.id,
+          store_id: '',
+          zip: '',
+          telephone: '',
+          trueName: this.trueName,
+          mobile: this.mobile,
+          area_id: this.area_id,
+          area_info: this.area_info
+        };
+        if(flag) {
+          let url = 'card/cart_address_save.htm'
+          let body = await request(url, 'get', data)
+          console.log(body,'body')
+          if (body.success) {
+            wx.showToast({
+              title: "添加成功", //提示的内容,
+              icon: "success", //图标,
+              duration: 2000, //延迟时间,
+              mask: true, //显示透明蒙层，防止触摸穿透,
+              success: res => {
+                wx.navigateTo({
+                  url: "/pages/address/main"
+                });
+              }
+            });
           }
-        });
-        // const data = await post("/address/saveAction", {
-        //   userName: _this.userName,
-        //   telNumber: _this.telNumber,
-        //   address: _this.address,
-        //   detailadress: _this.detailadress,
-        //   checked: _this.checked,
-        //   openId: _this.openId,
-        //   addressId: _this.id
-        // });
-        // if (data.data) {
-        //   wx.showToast({
-        //     title: "添加成功", //提示的内容,
-        //     icon: "success", //图标,
-        //     duration: 2000, //延迟时间,
-        //     mask: true, //显示透明蒙层，防止触摸穿透,
-        //     success: res => {
-        //       wx.navigateBack({
-        //         delta: 1 //返回的页面数，如果 delta 大于现有页面数，则返回到首页,
-        //       });
-        //     }
-        //   });
-      },
+        }
+      }
     }
 }
 </script>
