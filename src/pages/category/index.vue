@@ -8,7 +8,7 @@
     </div>
     <div class="content">
       <div class="left">
-        <div class="iconText" @click="selectitem(item.id,index)" v-for="(item, index) in listData" :class="[index==nowIndex?'active':'']" :key="index">
+        <div class="iconText" @click="selectitem(index)" v-for="(item, index) in listData" :class="[index==nowIndex?'active':'']" :key="index">
         {{item.className}}
         </div>
       </div>
@@ -16,7 +16,7 @@
           <div class="right-content">
             <div class="right-title">
               <div class="title-left">
-                <div class="title-info" :class="{'title-active': index==titleIndex}" @click="changeProduct(item.id, index)" v-for="(item,index) in currentTitle" :key="index">{{item.className}}</div>
+                <div class="title-info" :class="{'title-active': index==titleIndex}" @click="changeProduct(index)" v-for="(item,index) in currentTitle" :key="index">{{item.className}}</div>
               </div>
               <div class="title-more" @click="showMore">
                 <span v-if="!flag" class="icon-xia"></span>
@@ -24,9 +24,9 @@
               </div>
             </div>
             <div class="bottom">
-              <div @click="categoryList(item.id)" v-for="(v,i) in currentList" :key="i" class="item">
-                <img :src="v.wap_banner_url" alt="">
-                <span class="ellipsis">{{v.name}}</span>
+              <div @click="categoryList(v.id)" v-for="(v,i) in currentList" :key="i" class="item">
+                <img :src="v.goods_main_photo" alt="">
+                <span class="ellipsis goodsname">{{v.goods_name}}</span>
               </div>
            </div>
         </div>
@@ -36,260 +36,18 @@
 </template>
 
 <script>
-import { post } from "../../utils"
+import { post, get } from "../../utils"
 export default {
   data() {
     return {
       nowIndex: 0,
-      listData: [
-        {name: '最新推荐',id:0},
-        {name: '办公用品',id:1},
-        {name: '电子数码',id:2},
-        {name: '生活用品',id:3}
-      ],
+      listData: [],
       currentList: [],
       currentTitle: [],
       titleIndex: 0,
       oldArr: [],
-      flag:false,
-      detailData: [{
-        data: [
-          {name: '办公用纸',list: [
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4295_thumb_G_1515549377415.jpg",name:'得力3210标价纸(白) 10筒装'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4454_thumb_G_1515625026529.jpg",name:'得力9374薄型复写纸(蓝)(12.7*18.5cm)-32K 5盒装'},
-              {wap_banner_url: "http://www.sbn.shop/images/201709/thumb_img/3_thumb_G_1504810950151.jpg",name:'得力（deli）7361 珊瑚海70g A4复印纸 5包/箱'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4295_thumb_G_1515549377415.jpg",name:'得力3210标价纸(白) 10筒装'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4454_thumb_G_1515625026529.jpg",name:'得力9374薄型复写纸(蓝)(12.7*18.5cm)-32K 5盒装'},
-              {wap_banner_url: "http://www.sbn.shop/images/201709/thumb_img/3_thumb_G_1504810950151.jpg",name:'得力（deli）7361 珊瑚海70g A4复印纸 5包/箱'}
-            ]
-          },
-          {name: '办公耗材',list: [
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg",name:'惠普（HP）CH563Z 802 黑色墨盒'},
-              {wap_banner_url: "http://www.sbn.shop/images/201908/thumb_img/10772_thumb_G_1564595802738.jpg",name:'扬帆耐立打印机碳粉YFHC'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg",name:'惠普（HP）CH563Z 802 黑色墨盒'},
-               {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg",name:'惠普（HP）CH563Z 802 黑色墨盒'},
-              {wap_banner_url: "http://www.sbn.shop/images/201908/thumb_img/10772_thumb_G_1564595802738.jpg",name:'扬帆耐立打印机碳粉YFHC'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg",name:'惠普（HP）CH563Z 802 黑色墨盒'}
-            ]
-          },{name: '办公文具',list: [
-              {wap_banner_url: 'http://www.sbn.shop/images/201812/thumb_img/10655_thumb_G_1544730403475.jpg',
-              name:'晨光签字笔12支'},
-              {wap_banner_url: 'http://www.sbn.shop/images/201801/thumb_img/4462_thumb_G_1515625311762.jpg',
-              name:'得力9375薄型复写纸(蓝)(25.5*18.5cm)-16K'},
-              {wap_banner_url: 'http://www.sbn.shop/images/201812/thumb_img/10655_thumb_G_1544730403475.jpg',
-              name:'晨光签字笔12支'},
-              {wap_banner_url: 'http://www.sbn.shop/images/201812/thumb_img/10655_thumb_G_1544730403475.jpg',
-              name:'晨光签字笔12支'},
-              {wap_banner_url: 'http://www.sbn.shop/images/201801/thumb_img/4462_thumb_G_1515625311762.jpg',
-              name:'得力9375薄型复写纸(蓝)(25.5*18.5cm)-16K'},
-              {wap_banner_url: 'http://www.sbn.shop/images/201812/thumb_img/10655_thumb_G_1544730403475.jpg',
-              name:'晨光签字笔12支'}
-            ]
-          },{name: '办公设备/办公电器',list: [
-              {wap_banner_url: "http://www.sbn.shop/images/201711/thumb_img/3199_thumb_G_1510081697755.jpg",name:'联想（Lenovo） M7675DXF 黑白激光一体机(打印 复印 扫描 传真'},
-              {wap_banner_url: "http://www.sbn.shop/images/201711/thumb_img/3212_thumb_G_1510084201087.jpg",name:'松下（Panasonic）KX-MB2123CNB 激光传真机多功能打印一体机'},
-              {wap_banner_url: "http://www.sbn.shop/images/201709/thumb_img/897_thumb_G_1506279238919.jpg",name:'惠普（HP）LaserJet Pro MFP M128fp黑白激光一体机 打印复印扫描传真'},
-              {wap_banner_url: "http://www.sbn.shop/images/201711/thumb_img/3199_thumb_G_1510081697755.jpg",name:'联想（Lenovo） M7675DXF 黑白激光一体机(打印 复印 扫描 传真'},
-              {wap_banner_url: "http://www.sbn.shop/images/201711/thumb_img/3212_thumb_G_1510084201087.jpg",name:'松下（Panasonic）KX-MB2123CNB 激光传真机多功能打印一体机'},
-              {wap_banner_url: "http://www.sbn.shop/images/201709/thumb_img/897_thumb_G_1506279238919.jpg",name:'惠普（HP）LaserJet Pro MFP M128fp黑白激光一体机 打印复印扫描传真'}
-            ]
-          },{name: '其他纸制品',list: [
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg",name:'惠普（HP）CH563Z 802 黑色墨盒'},
-              {wap_banner_url: "http://www.sbn.shop/images/201908/thumb_img/10772_thumb_G_1564595802738.jpg",name:'扬帆耐立打印机碳粉YFHC'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg",name:'111'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg",name:'惠普（HP）CH563Z 802 黑色墨盒'},
-              {wap_banner_url: "http://www.sbn.shop/images/201908/thumb_img/10772_thumb_G_1564595802738.jpg",name:'扬帆耐立打印机碳粉YFHC'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/2887_thumb_G_1514836622108.jpg",name:'111'}
-            ]
-          }
-        ]
-      },{
-        data: [
-          {name: '二级分类1',list: [
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'}
-            ]
-          },
-          {name: '二级分类1',list: [
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'}
-            ]
-          },
-          {name: '二级分类1',list: [
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'}
-            ]
-          },
-          {name: '二级分类1',list: [
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'}
-            ]
-          }
-        ]
-      },{
-        data: [
-          {name: '最新推荐',list: [
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'}
-            ]
-          },
-          {name: '办公用品',list: [
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'}
-            ]
-          },
-          {name: '电子数码',list: [
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'}
-            ]
-          },
-          {name: '生活用品',list: [
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'}
-            ]
-          }
-        ]
-      },{
-        data: [
-          {name: '最新推荐',list: [
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'最新推荐'}
-            ]
-          },
-          {name: '办公用品',list: [
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'办公用品'}
-            ]
-          },
-          {name: '电子数码',list: [
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'电子数码'}
-            ]
-          },
-          {name: '生活用品',list: [
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},{wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'},
-              {wap_banner_url: "http://www.sbn.shop/images/201801/thumb_img/4323_thumb_G_1515608877709.jpg",name:'生活用品'}
-            ]
-          }
-        ]
-      }]
+      flag:false
     }
-  },
-  beforeMount() {
-    // this.currentList = this.detailData[0].data[0].list
   },
   mounted () {
     this.getGoodsCates()
@@ -297,31 +55,25 @@ export default {
   methods: {
     // 点击更多，title的数量展示
     showMoreData(i) {
-      this.oldArr = this.listData[i].childs.slice(0)
-      if(this.listData[i].childs.length >= 3) {
-        this.oldArr.splice(3)
+      let tempArr = JSON.parse(JSON.stringify(this.listData[i].childs))
+      if(this.listData[i].childs.length >= 3 && !this.flag) {
+        this.oldArr = tempArr.splice(0, 3)
         this.currentTitle = this.oldArr
-        console.log(this.titleIndex, 'currentTitle')
-        console.log(this.currentTitle)
-        console.log(this.currentTitle[this.titleIndex].id, 'id')
         this.getGoodsByCateId(this.currentTitle[this.titleIndex].id)
       }else {
         this.currentTitle = this.listData[i].childs
-        console.log(this.titleIndex, 'currentTitle')
-        console.log(this.currentTitle)
-        console.log(this.currentTitle[this.titleIndex].id, 'id')
         this.getGoodsByCateId(this.currentTitle[this.titleIndex].id)
       }
     },
     tosearch(index, id) {
       // wx.navigateTo({ url: "/pages/search/main" });
     },
-    selectitem(id, index) {
+    selectitem(index) {
+      console.log(this.listData[index])
       this.nowIndex = index
       this.titleIndex = 0
       this.currentTitle = this.listData[index].childs
-      this.flag = false
-      this.showMoreData(index, id)
+      this.showMoreData(index)
     },
     // 展示更多
     showMore() {
@@ -330,19 +82,17 @@ export default {
         this.currentTitle = this.listData[this.nowIndex].childs
       }else{
         this.currentTitle = this.oldArr
+        this.titleIndex = 0
       }
-      console.log(this.flag,this.currentTitle,this.oldArr)
     },
-    changeProduct(id, index) {
+    changeProduct(index) {
       this.titleIndex = index
-      this.showMoreData(this.nowIndex, id)
-      // console.log(this.titleIndex,index)
+      this.showMoreData(this.nowIndex)
     },
     categoryList(id) {
-      console.log("tiaozhuan");
-      // wx.navigateTo({
-      //   url: "../categorylist/main?id=" + id
-      // });
+      wx.navigateTo({
+        url: "/pages/good/main?id=" + id
+      });
     },
     // 获取分类数据
     async getGoodsCates() {
@@ -351,24 +101,25 @@ export default {
       let body = await post(url, data)
       console.log(body, 'getGoodsCates')
       if (body.success) {
-        this.listData = body.data
-        this.showMoreData(0)
-        // this.brandData = this.handlleData(body.data)
-        // console.log(this.brandData)
+        if (body.data && body.data.length > 0) {
+          this.listData = body.data
+          this.showMoreData(0)
+        }
       }
     },
     // 获取二级分类数据
     async getGoodsByCateId(id) {
+      id = '1'
       let data = {
         gc_id: id
       }
       let url = '/goodsByCateId.htm'
-      let body = await post(url, data)
+      let body = await get(url, data)
       console.log(body, 'getGoodsByCateId')
       if (body.success) {
-        this.listData = body.data
-        // this.brandData = this.handlleData(body.data)
-        // console.log(this.brandData)
+        if (body.data && body.data.length > 0) {
+          this.currentList = body.data
+        }
       }
     }
   }
@@ -464,6 +215,7 @@ page {
               box-sizing: border-box;
               padding: 8rpx;
               margin: 10rpx 10rpx 0 0;
+              font-size: 26rpx;
             }
             .title-active {
               color:#f2270c;
@@ -479,20 +231,25 @@ page {
       .bottom {
         display: flex; // justify-content: space-between;
         flex-wrap: wrap;
+        margin-top: 40rpx;
+        border-top: 1rpx solid #ddd;
+        padding-top: 40rpx;
         .item {
           width: 33.33%;
           text-align: center;
           font-size: 24rpx;
           font-weight: 400;
-          margin-top: 20rpx;
           img {
             height: 110rpx;
             width: 120rpx;
             display: block;
             margin: 0 auto;
+            border: 1rpx solid #ddd;
           }
         }
-
+        .goodsname{
+          margin: 20rpx 0;
+        }
       }
     }
   }
