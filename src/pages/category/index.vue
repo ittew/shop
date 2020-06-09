@@ -18,12 +18,12 @@
               <div class="title-left">
                 <div class="title-info" :class="{'title-active': index==titleIndex}" @click="changeProduct(index)" v-for="(item,index) in currentTitle" :key="index">{{item.className}}</div>
               </div>
-              <div class="title-more" @click="showMore">
+              <div class="title-more" @click="showMore" v-if="currentTitle.length > 3">
                 <span v-if="!flag" class="icon-xia"></span>
                 <span  v-else class="icon-shangjiantou-cu"></span>
               </div>
             </div>
-            <div class="bottom">
+            <div class="bottom" v-if="currentList.length > 0">
               <div @click="categoryList(v.id)" v-for="(v,i) in currentList" :key="i" class="item">
                 <img :src="v.goods_main_photo" alt="">
                 <span class="ellipsis goodsname">{{v.goods_name}}</span>
@@ -55,14 +55,16 @@ export default {
   methods: {
     // 点击更多，title的数量展示
     showMoreData(i) {
-      let tempArr = JSON.parse(JSON.stringify(this.listData[i].childs))
-      if(this.listData[i].childs.length >= 3 && !this.flag) {
-        this.oldArr = tempArr.splice(0, 3)
-        this.currentTitle = this.oldArr
-        this.getGoodsByCateId(this.currentTitle[this.titleIndex].id)
-      }else {
-        this.currentTitle = this.listData[i].childs
-        this.getGoodsByCateId(this.currentTitle[this.titleIndex].id)
+      if (this.listData[i].childs.length > 0) {
+         let tempArr = JSON.parse(JSON.stringify(this.listData[i].childs))
+        if(this.listData[i].childs.length >= 3 && !this.flag) {
+          this.oldArr = tempArr.splice(0, 3)
+          this.currentTitle = this.oldArr
+          this.getGoodsByCateId(this.currentTitle[this.titleIndex].id)
+        }else {
+          this.currentTitle = this.listData[i].childs
+          this.getGoodsByCateId(this.currentTitle[this.titleIndex].id)
+        }
       }
     },
     tosearch(index, id) {

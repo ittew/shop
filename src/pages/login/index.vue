@@ -76,7 +76,7 @@ export default {
         }
       } else {
         wx.showToast({
-          title: '请输入正确的手机号！',
+          title: '手机号码格式不正确！',
           icon: 'none',
           duration: 2000
         })
@@ -206,12 +206,13 @@ input {
   position: relative;
 }
 .get-code {
-  width: 150rpx;
+  width: 170rpx;
   position: absolute;
   top: 46rpx;
   right: 10rpx;
   z-index: 99;
   font-size: 30rpx;
+  text-align: center;
   color: #00a4ff;
   padding: 0rpx !important;
   border: 1rpx solid #fff;
