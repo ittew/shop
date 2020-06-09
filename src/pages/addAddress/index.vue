@@ -49,18 +49,22 @@ export default {
     this.clearData()
     if(getQuery()['id']) {
       this.id = getQuery()['id']
+      this.getData()
     }
   },
   methods: {
     async getData () {
       console.log(222)
-      // let data = {'store_id':this.id} // 门店IDa
-      // let url = 'card/address.htm'
-      // let body = await request(url, 'get', data)
-      // if (body.success) {
-      //   this.listData = body.data
-      //   console.log(body.data,'data')
-      // }
+      let data = {'id':this.id} // 门店IDa
+      let url = '/card/address_view.htm'
+      let body = await request(url, 'get', data)
+      if (body.success) {
+        let datas = body.data
+        this.trueName = datas.trueName
+        this.mobile = datas.mobile
+        this.area_id = []
+        this.area_info = datas.area_info
+      }
     },
     clearData() {
       this.trueName = ''
@@ -127,11 +131,19 @@ export default {
           telephone: '',
           trueName: this.trueName,
           mobile: this.mobile,
-          area_id: this.area_id,
+          area: {
+          "addTime": "",
+          "areaName": this.area_id,
+          "childs": [],
+          "common": "",
+          "id": "",
+          "level": "",
+          "sequence": "",
+          },
           area_info: this.area_info
         };
         if(flag) {
-          let url = 'card/cart_address_save.htm'
+          let url = '/card/cart_address_save.htm'
           let body = await request(url, 'get', data)
           console.log(body,'body')
           if (body.success) {

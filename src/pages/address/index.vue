@@ -55,8 +55,8 @@ export default {
     // 获取地址列表数据
     async getData () {
       console.log(222)
-      let data = {'store_id':'262158'} // 门店IDa
-      let url = 'card/address.htm'
+      let data = {'currentPage':'','orderBy':'','orderType':'','store_id':''} // 门店IDa
+      let url = '/card/address.htm'
       let body = await request(url, 'get', data)
       if (body.success) {
         this.listData = body.data
@@ -65,8 +65,8 @@ export default {
     },
     delAddress(item) {
       console.log(item)
-      let data = {'mulitId':item.id,'store_id':'22'} // 门店IDa
-      let url = 'card/address_del.htm'
+      let data = {'mulitId':item.id,'store_id':'11'} // 门店IDa
+      let url = '/card/address_del.htm'
       wx.showModal({
         title: "",
         content: "是否要删除该收货地址",
