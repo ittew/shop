@@ -1,10 +1,12 @@
 {
   "pages": [
     "pages/index/main",
+    "pages/cart/main",
+    "pages/login/main",
+    "pages/register/main",
     "pages/markdownList/main",
     "pages/newdetail/main",
     "pages/sortlist/main",
-    "pages/login/main",
     "pages/store/main",
     "pages/list/main",
     "pages/brandList/main",
@@ -19,7 +21,6 @@
     "pages/good/main",
     "pages/category/main",
     "pages/logs/main",
-    "pages/cart/main",
     "pages/counter/main"
   ],
   "window": {

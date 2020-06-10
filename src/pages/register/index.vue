@@ -20,13 +20,7 @@
       </div>
       <!-- 短信登录 -->
       <div class="btnBox loginBtn">
-        <!-- <button open-type="getUserInfo" size="default" hover-class="other-button-hover" @getuserinfo="login">登录</button> -->
-        <button size="default" :disabled="loginDisabled" hover-class="other-button-hover" @tap="login">登录</button>
-      </div>
-      <!-- 微信一键登录 -->
-      <div class="btnBox wxLoginBox">
-        <!-- <button class="wxPhone" hover-class="" open-type="getPhoneNumber" @click="getPhoneNumbered">微信一键登录</button> -->
-        <button class="wxPhone" hover-class="" @click="OnekeyLogin">微信一键登录</button>
+        <button size="default" :disabled="loginDisabled" hover-class="other-button-hover" @tap="register">注册</button>
       </div>
     </div>
     <div class="footer">
@@ -36,7 +30,7 @@
 </template>
 
 <script>
-import { request, getOpenid } from "../../utils"
+import { request } from "../../utils"
 export default {
   data () {
     return {
@@ -90,86 +84,35 @@ export default {
         }
       }, 1000)
     },
-    // 登录
-    // async login (userInfo) {
-    //   console.log(userInfo.mp)
-    //   if (userInfo.mp.detail.userInfo) {
-    //     if(!this.phoneNumber || !/^1[\d]{10}/.test(this.phoneNumber)){
-    //       wx.showToast({
-    //         title: '手机号码格式不正确!',
-    //         icon: 'none',
-    //         duration: 2000
-    //       })
-    //     } else if(!this.code || !/^[\d]{6}/.test(this.code)){
-    //       wx.showToast({
-    //         title: '验证码格式不正确!',
-    //         icon: 'none',
-    //         duration: 2000
-    //       })
-    //     } else {
-    //       let opendId = wx.getStorageSync('openid')
-    //       let data = {
-    //         telPhone: this.phoneNumber,
-    //         opendId,
-    //         code: this.code
-    //       }
-    //       let url = '/appLogin.htm'
-    //       let body = await request(url, 'post', data)
-    //       console.log(body)
-    //       if (body.success && body.token) {
-    //         wx.setStorageSync("token", body.token)
-    //         wx.navigateTo({url: '/pages/index/main'})
-    //       } else {
-    //         wx.showToast({
-    //           title: body.message,
-    //           icon: 'none',
-    //           duration: 2000
-    //         })
-    //       }
-    //     }
-    //   } else {
-    //     wx.showModal({
-    //       title: '提示',
-    //       content: '请先完成授权操作才能继续'
-    //     })
-    //   }
-    // }
-    // 登录
-    async login () {
+    // 注册
+    async register () {
       if (!this.loginDisabled) {
+        let wxCode = wx.getStorageSync('wxCode')
         let data = {
           telPhone: this.phoneNumber,
-          type: '2', // 手机号码登录
-          // authCode: this.code
-          authCode: '111111'
+          wxCode, // code码
+          // code: this.code
+          code: '111111'
         }
-        let url = '/appLogin.htm'
-        let body = await request(url, 'post', data)
+        let url = '/register.htm'
+        let body = await request(url, 'get', data)
         console.log(body)
-        if (body.success && body.token) {
-          wx.setStorageSync("token", body.token)
-          wx.switchTab({url: '/pages/index/main'})
+        if (body.success && body.message == '成功') {
+          wx.showToast({
+            title: '注册成功',
+            icon: 'none',
+            duration: 1000
+          })
+          setTimeout(() => {
+            // this.code = this.phoneNumber = ''
+            wx.redirectTo({url: '/pages/login/main'})
+          }, 1000)
         } else {
-          if (body.message == '该用户未找到') {
-            wx.showModal({
-              title: '提示',
-              content: '您还没有注册请先注册！',
-              confirmText: "去注册",
-              success (res) {
-                if (res.confirm) {
-                  wx.navigateTo({url: '/pages/register/main'})
-                } else if (res.cancel) {
-                  console.log('用户点击取消')
-                }
-              }
-            })
-          } else {
-              wx.showToast({
-              title: body.message,
-              icon: 'none',
-              duration: 2000
-            })
-          }
+          wx.showToast({
+            title: body.message,
+            icon: 'none',
+            duration: 2000
+          })
         }
       }
     },
@@ -181,42 +124,6 @@ export default {
         this.loginDisabled = false
       } else {
         this.loginDisabled = true
-      }
-    },
-    async OnekeyLogin () {
-      let wxCode = wx.getStorageSync('wxCode')
-      wxCode = '111111'
-      let data = {
-        wxCode,
-        type: 1 // 微信一键登录
-      }
-      let url = '/appLogin.htm'
-      let body = await request(url, 'get', data)
-      console.log(body)
-      if (body.success && body.token) {
-        wx.setStorageSync("token", body.token)
-        wx.switchTab({url: '/pages/index/main'})
-      } else {
-        if (body.message == '该用户未找到') {
-          wx.showModal({
-            title: '提示',
-            content: '您还没有注册请先注册！',
-            confirmText: "去注册",
-            success (res) {
-              if (res.confirm) {
-                wx.navigateTo({url: '/pages/register/main'})
-              } else if (res.cancel) {
-                console.log('用户点击取消')
-              }
-            }
-          })
-        } else {
-            wx.showToast({
-            title: body.message,
-            icon: 'none',
-            duration: 2000
-          })
-        }
       }
     }
   }
