@@ -48,7 +48,8 @@ export default {
       // ]
     }
   },
-  mounted() {
+  onLoad() {
+    console.log('onLoad---')
     this.getData()
   },
   methods: {
@@ -80,9 +81,11 @@ export default {
                 icon: "success",
                 duration: 1500
               });
-              wx.navigateTo({
-                url: "/pages/address/main"
-              });
+              // console.log(getCurrentPages(),'getCurrentPages().length')
+              if (getCurrentPages().length != 0) {
+                //刷新当前页面的数据
+                getCurrentPages()[getCurrentPages().length - 1].onLoad()
+              }
             }
           }
         }
