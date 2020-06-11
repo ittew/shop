@@ -17,7 +17,7 @@
       <div class="item" v-if="v.spec.properties.length>0">
         <span>{{v.spec.name}}：</span>
         <div class="desc">
-          <div :class="{active:val.active}" v-for="(val,item) in v.spec.properties" :key="item" @tap="selectDesc(i,item)">{{val.value}}</div>
+          <div :class="{active:val.active}" v-for="(val,item) in v.spec.properties" :key="item" @tap="selectDesc(i,item,val)">{{val.value}}</div>
         </div>
       </div>
     </div>
@@ -137,6 +137,7 @@ data() {
       "primary_pic_url": "http://yanxuan.nosdn.127.net/bcaf7ee314af7dbfb04612087e563249.jpg",
       "retail_price": 599,
     },
+    currentSpec:[],
     goods_specs: [
       {
         "sequence": 2,
@@ -187,6 +188,7 @@ mounted () {
   this.getDetail()
 },
 methods: {
+  // 处理点击选中后规格
   handleSpec(data) {
     data.forEach(v=>{
         let properties = v.spec.properties
@@ -203,6 +205,12 @@ methods: {
     });
     // return data
   },
+  // 获取默认的规格
+  getDefSpec(data) {
+    data.forEach(v=>{
+      this.currentSpec.push(v.spec.properties[0].value)
+    })
+  },
   preview(src, e) {
     // do something
   },
@@ -212,11 +220,13 @@ methods: {
   aaa() {
     console.log(111)
   },
-  selectDesc(i,index) {
+  selectDesc(i,index,spec) {
     this.goods_specs[i].spec.properties.forEach(v=>{
         v.active = false
     })
     this.goods_specs[i].spec.properties[index].active = true
+    this.currentSpec[i] = spec.value
+    // console.log(this.currentSpec,spec,'spec')
   },
   // 获取商品详情数据
   async getDetail() {
@@ -233,10 +243,11 @@ methods: {
       this.gallery = body.good.goods_photos
       // console.log("this.gallery")
       // console.log(this.gallery)
-      this.attribute = body.good.goods_property
+      // this.attribute = body.good.goods_property
       // this.goods_specs = JSON.parse(body.goods_specs)
-      // console.log(this.goods_specs,'this.goods_specs')
+      // console.log(this.goods_specs,'this.goods_specs----')
       this.handleSpec(this.goods_specs)
+      this.getDefSpec(this.goods_specs)
       // this.goodsSpecifications = JSON.parse(body.goodsSpecifications)
       // console.log(this.goods_specs,'this.goods_specs')
       // console.log(this.goodsSpecifications,'this.goodsSpecifications')
@@ -246,6 +257,7 @@ methods: {
   },
   // 立即购买-跳转到订单列表
   bug() {
+    this.number == 0
     if (this.showpop) {
       if (this.number == 0) {
         wx.showToast({
@@ -261,25 +273,13 @@ methods: {
         url: "/pages/order/main"
       });
       this.showpop = false
-      // console.log(this.goodsId);
-      // console.log(this.openId);
-
-      // const data = await post("/order/submitAction", {
-      //   goodsId: this.goodsId,
-      //   openId: this.openId,
-      //   allPrise: this.allPrise
-      // });
-      // if (data) {
-      //   wx.navigateTo({
-      //     url: "/pages/order/main"
-      //   });
-      // }
     } else {
       this.showpop = true;
     }
   },
   // 加入购物车
-  addCart() {
+  async addCart() {
+    this.number == 0
     if (this.showpop) {
       if (this.number == 0) {
         wx.showToast({
@@ -291,13 +291,18 @@ methods: {
         });
         return false;
       }
-      // const data = await post("/cart/addCart", {
-      //   openId: this.userInfo.openId,
-      //   goodsId: this.goodsId,
-      //   number: this.number
-      // });
+      let price = this.info.retail_price*this.number
+      let desc = this.currentSpec.join(',')
+      let data = {
+        'id': this.goodid, // id 商品对应的id  用于获取商品详情数据
+        'count': this.number, // 数量
+        'price': price, // 单价
+        'gsp': desc, // 商品规格
+      }
+      let url = '/card/addGoodsCart.htm'
+      let body = await request(url, 'get', data)
+      if (body.success) {
       //添加成功后
-      // if (data) {
         this.allnumber = this.allnumber + this.number;
         wx.showToast({
           title: "添加购物车成功",
@@ -305,7 +310,7 @@ methods: {
           duration: 1500
         });
         this.showpop = false
-      // }
+      }
     } else {
       this.showpop = true;
     }
