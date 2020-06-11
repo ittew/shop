@@ -1,5 +1,5 @@
 <script>
-import { getOpenid } from './utils'
+import { getOpenid, getWxCode } from './utils'
 export default {
   created () {
     // 调用API从本地缓存中获取数据
@@ -40,8 +40,12 @@ export default {
       // console.log("app created and cache logs by setStorageSync");
       //获取openid
 
-      if (!wx.getStorageSync('openid')) {
-        getOpenid()
+      // if (!wx.getStorageSync('openid')) {
+      //   getOpenid()
+      // }
+      //获取code
+      if (!wx.getStorageSync('wxCode')) {
+        getWxCode()
       }
     }
   },

@@ -73,8 +73,8 @@ export function post(url, data) {
 //----------------------------------------------用户是否登录 未登录跳转到登录页面 -------------------------
 
 export function toLogin() {
-  const userInfo = wx.getStorageSync("userInfo");
-  if (!userInfo) {
+  const token = wx.getStorageSync("token");
+  if (!token) {
     wx.navigateTo({
       url: "/pages/login/main"
     });
@@ -123,6 +123,18 @@ export function getOpenid() {
         })
       } else {
         console.log('登录失败！' + res.errMsg)
+      }
+    },
+    fail: (err) => {},
+    complete: () => {}
+  })
+}
+export function getWxCode() {
+  wx.login({
+    success: res => {
+      console.log(res, '获取code')
+      if (res.code) {
+        wx.setStorageSync("wxCode", res.code);
       }
     },
     fail: (err) => {},
