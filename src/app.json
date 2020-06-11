@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/good/main",
     "pages/index/main",
     "pages/cart/main",
     "pages/login/main",
@@ -18,7 +19,6 @@
     "pages/address/main",
     "pages/addAddress/main",
     "pages/addressSelect/main",
-    "pages/good/main",
     "pages/category/main",
     "pages/logs/main",
     "pages/counter/main"

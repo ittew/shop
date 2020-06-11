@@ -15,7 +15,7 @@
   <div class="standard grayLine">
     <div v-for="(v,i) in goods_specs" :key="i" >
       <div class="item" v-if="v.spec.properties.length>0">
-        <span >{{v.spec.name}}：</span>
+        <span>{{v.spec.name}}：</span>
         <div class="desc">
           <div :class="{active:val.active}" v-for="(val,item) in v.spec.properties" :key="item" @tap="selectDesc(i,item)">{{val.value}}</div>
         </div>
@@ -163,7 +163,7 @@ data() {
           "name": "显存容器",
           "sequence": 6,
           "type": "text",
-          "properties": ["111","333"],
+          "properties": ["111","2222"],
           "id": 2,
           "addTime": "2013-12-24 08:59:56",
           "deleteStatus": false
@@ -440,6 +440,7 @@ position: relative;
       border: 2rpx solid #c5c5c5;
       margin:20rpx 20rpx 0 0;
       box-sizing: border-box;
+      overflow: hidden;
     }
     .active {
       border: 2rpx solid #f2270c;
@@ -486,7 +487,6 @@ background: #fff;
   }
 }
 .detail {
-  padding-bottom: 120rpx;
   img {
     width: 100%;
     height: 534rpx;
