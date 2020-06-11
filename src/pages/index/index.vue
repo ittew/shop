@@ -22,12 +22,12 @@
         </div>
       </div>
     </div>
-    <!-- 公告 -->
+    <!-- 咨询 -->
     <div class="hot-swiper">
       <span class="icon-laba"></span>
       <swiper class="swiper-container " vertical autoplay="true" interval="3000" circular="true" duration="500">
         <block v-for="(item, index) in hotData" :key="index" >
-          <swiper-item class="swiper-item" @click="jumpNewDetail">
+          <swiper-item class="swiper-item" @click="jumpNewDetail(item.id)">
             <div class="item ellipsis">{{item.title}}</div>
           </swiper-item>
         </block>
@@ -81,8 +81,8 @@
     </div>
     <!-- 底部版权 -->
     <div class="bottom">
-      <p>陕西省广播电视信息网络股份有限公司</p>
-      <p>免费电话：400-168-8686</p>
+      <p>西安烨霖电子科技有限责任公司 版权所有</p>
+      <p>服务热线：029-88225958  |  陕ICP备12011537号</p>
     </div>
   </div>
 </template>
@@ -402,9 +402,9 @@ export default {
         url
       })
     },
-    jumpNewDetail() {
+    jumpNewDetail(id) {
       wx.navigateTo({
-        url: '/pages/newdetail/main'
+        url: '/pages/newdetail/main?id=' + id
       })
     },
     gotoList(item) {
