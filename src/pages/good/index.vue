@@ -134,8 +134,8 @@ data() {
       {'list_pic_url': '/static/images/detail2.jpg'}
     ],
     info: {
-      "primary_pic_url": "http://yanxuan.nosdn.127.net/bcaf7ee314af7dbfb04612087e563249.jpg",
-      "retail_price": 599,
+      "primary_pic_url": "",
+      "retail_price": "",
     },
     currentSpec:[],
     goods_specs: [
@@ -238,6 +238,8 @@ methods: {
     if (body.success) {
       console.log(body,'body')
       this.article = body.good.goods_property
+      this.info.retail_price =  body.good.goods_current_price
+      this.info.primary_pic_url =  body.good.goods_main_photo
       // console.log("this.attribute")
       // console.log(this.attribute)
       this.gallery = body.good.goods_photos
