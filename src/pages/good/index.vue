@@ -13,10 +13,12 @@
   </div>
   <!-- 要选择的商品规格 -->
   <div class="standard grayLine">
-    <div class="item" v-for="(v,i) in goods_specs" :key="i" @click="aaa">
-      <span>{{v.spec.name}}：</span>
-      <div class="desc">
-        <div :class="{active:val.active}" v-for="(val,item) in v.spec.properties" :key="item" @tap="selectDesc(i,item)">{{val.value}}</div>
+    <div v-for="(v,i) in goods_specs" :key="i" >
+      <div class="item" v-if="v.spec.properties.length>0">
+        <span >{{v.spec.name}}：</span>
+        <div class="desc">
+          <div :class="{active:val.active}" v-for="(val,item) in v.spec.properties" :key="item" @tap="selectDesc(i,item)">{{val.value}}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -135,7 +137,42 @@ data() {
       "primary_pic_url": "http://yanxuan.nosdn.127.net/bcaf7ee314af7dbfb04612087e563249.jpg",
       "retail_price": 599,
     },
-    goods_specs: [],
+    goods_specs: [
+      {
+        "sequence": 2,
+        "value": "2GB",
+        "specImage": "",
+        "spec": {
+          "name": "显存容器",
+          "sequence": 6,
+          "type": "text",
+          "properties": ["512MB","6GB","8GB"],
+          "id": 2,
+          "addTime": "2013-12-24 08:59:56",
+          "deleteStatus": false
+        },
+        "id": 15,
+        "addTime": "2020-05-13 18:53:35",
+        "deleteStatus": false
+      },
+      {
+        "sequence": 2,
+        "value": "2GB",
+        "specImage": "",
+        "spec": {
+          "name": "显存容器",
+          "sequence": 6,
+          "type": "text",
+          "properties": ["111","333"],
+          "id": 2,
+          "addTime": "2013-12-24 08:59:56",
+          "deleteStatus": false
+        },
+        "id": 15,
+        "addTime": "2020-05-13 18:53:35",
+        "deleteStatus": false
+      }
+    ],
     goodsSpecifications: [],
     allnumber: 0,
     showpop: false,
@@ -152,14 +189,14 @@ mounted () {
 methods: {
   handleSpec(data) {
     data.forEach(v=>{
-      let properties = v.spec.properties
-      v.spec.properties = []
-      properties.forEach(val=>{
-        v.spec.properties.push({
-          value: val,
-          active: false
+        let properties = v.spec.properties
+        v.spec.properties = []
+        properties.forEach(val=>{
+          v.spec.properties.push({
+            value: val,
+            active: false
+          })
         })
-      })
     })
     data.forEach(v => {
       v.spec.properties[0].active=true
@@ -176,12 +213,10 @@ methods: {
     console.log(111)
   },
   selectDesc(i,index) {
-    console.log(222)
-
-    // this.goods_specs[i].properties.forEach(v=>{
-    //     v.properties.active = false
-    // })
-    // this.goods_specs[i].spec.properties[index].active = true
+    this.goods_specs[i].spec.properties.forEach(v=>{
+        v.active = false
+    })
+    this.goods_specs[i].spec.properties[index].active = true
   },
   // 获取商品详情数据
   async getDetail() {
@@ -200,47 +235,11 @@ methods: {
       // console.log(this.gallery)
       this.attribute = body.good.goods_property
       // this.goods_specs = JSON.parse(body.goods_specs)
-      this.goods_specs = [
-        {
-          "sequence": 2,
-          "value": "2GB",
-          "specImage": "",
-          "spec": {
-            "name": "显存容器",
-            "sequence": 6,
-            "type": "text",
-            "properties": ["512MB","6GB","8GB"],
-            "id": 2,
-            "addTime": "2013-12-24 08:59:56",
-            "deleteStatus": false
-          },
-          "id": 15,
-          "addTime": "2020-05-13 18:53:35",
-          "deleteStatus": false
-        },
-        {
-          "sequence": 2,
-          "value": "2GB",
-          "specImage": "",
-          "spec": {
-            "name": "显存容器",
-            "sequence": 6,
-            "type": "text",
-            "properties": ["5MB","60GB","80GB"],
-            "id": 2,
-            "addTime": "2013-12-24 08:59:56",
-            "deleteStatus": false
-          },
-          "id": 15,
-          "addTime": "2020-05-13 18:53:35",
-          "deleteStatus": false
-        }
-      ]
-      this.handleSpec(this.goods_specs)
-
-      this.goodsSpecifications = JSON.parse(body.goodsSpecifications)
       // console.log(this.goods_specs,'this.goods_specs')
-      console.log(this.goodsSpecifications,'this.goodsSpecifications')
+      this.handleSpec(this.goods_specs)
+      // this.goodsSpecifications = JSON.parse(body.goodsSpecifications)
+      // console.log(this.goods_specs,'this.goods_specs')
+      // console.log(this.goodsSpecifications,'this.goodsSpecifications')
       // console.log("this.attribute")
       // console.log(this.attribute)
     }
@@ -425,10 +424,9 @@ position: relative;
 }
 }
 .standard {
-  padding: 0 30rpx 20rpx;
   background: #fff;
   .item {
-    padding-top: 20rpx;
+    padding: 20rpx 30rpx 20rpx;
   }
   .desc {
     display: flex;
