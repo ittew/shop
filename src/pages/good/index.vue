@@ -138,42 +138,7 @@ data() {
       "retail_price": "",
     },
     currentSpec:[],
-    goods_specs: [
-      {
-        "sequence": 2,
-        "value": "2GB",
-        "specImage": "",
-        "spec": {
-          "name": "显存容器",
-          "sequence": 6,
-          "type": "text",
-          "properties": ["512MB","6GB","8GB"],
-          "id": 2,
-          "addTime": "2013-12-24 08:59:56",
-          "deleteStatus": false
-        },
-        "id": 15,
-        "addTime": "2020-05-13 18:53:35",
-        "deleteStatus": false
-      },
-      {
-        "sequence": 2,
-        "value": "2GB",
-        "specImage": "",
-        "spec": {
-          "name": "显存容器",
-          "sequence": 6,
-          "type": "text",
-          "properties": ["111","2222"],
-          "id": 2,
-          "addTime": "2013-12-24 08:59:56",
-          "deleteStatus": false
-        },
-        "id": 15,
-        "addTime": "2020-05-13 18:53:35",
-        "deleteStatus": false
-      }
-    ],
+    goods_specs: [],
     goodsSpecifications: [],
     allnumber: 0,
     showpop: false,
@@ -248,8 +213,47 @@ methods: {
       // this.attribute = body.good.goods_property
       // this.goods_specs = JSON.parse(body.goods_specs)
       // console.log(this.goods_specs,'this.goods_specs----')
+      this.goods_specs = [
+      {
+        "sequence": 2,
+        "value": "2GB",
+        "specImage": "",
+        "spec": {
+          "name": "显存容器",
+          "sequence": 6,
+          "type": "text",
+          "properties": ["512MB","6GB","8GB"],
+          "id": 2,
+          "addTime": "2013-12-24 08:59:56",
+          "deleteStatus": false
+        },
+        "id": 15,
+        "addTime": "2020-05-13 18:53:35",
+        "deleteStatus": false
+      },
+      {
+        "sequence": 2,
+        "value": "2GB",
+        "specImage": "",
+        "spec": {
+          "name": "显存容器",
+          "sequence": 6,
+          "type": "text",
+          "properties": ["111","2222"],
+          "id": 2,
+          "addTime": "2013-12-24 08:59:56",
+          "deleteStatus": false
+        },
+        "id": 15,
+        "addTime": "2020-05-13 18:53:35",
+        "deleteStatus": false
+      }
+    ]
+      console.log(this.goods_specs,'this.goods_specs1----')
       this.handleSpec(this.goods_specs)
       this.getDefSpec(this.goods_specs)
+      console.log(this.goods_specs,'this.goods_specs2----')
+
       // this.goodsSpecifications = JSON.parse(body.goodsSpecifications)
       // console.log(this.goods_specs,'this.goods_specs')
       // console.log(this.goodsSpecifications,'this.goodsSpecifications')

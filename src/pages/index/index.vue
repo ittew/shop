@@ -72,7 +72,7 @@
         <div class="Title-right" @tap="gotoList">查看全部<img src="/static/images/right-arrow.png" alt=""></div>
       </div>
       <div class="sublist">
-        <div v-for="(subitem, subindex) in v.goods" :key="subindex" @click="jumpDetail">
+        <div v-for="(subitem, subindex) in v.goods" :key="subindex" @click="jumpDetail(subitem)">
           <img :src="subitem.goods_main_photo" alt="">
           <p class="ellipsis-two">{{subitem.goods_name}}</p>
           <p>￥{{subitem.store_price}}</p>
@@ -420,13 +420,14 @@ export default {
     },
     // 跳转到商品详情
     jumpDetail(item) {
+      // console.log(item,'item')
       if(item=='brand') {
         wx.navigateTo({
           url: '/pages/store/main'
         })
       } else {
         wx.navigateTo({
-          url: '/pages/good/main'
+          url: '/pages/good/main?id=' + item.id
         })
       }
     }
