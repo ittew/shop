@@ -140,8 +140,8 @@ export default {
         let data = {
           telPhone: this.phoneNumber,
           type: '2', // 手机号码登录
-          // authCode: this.code
-          authCode: '111111'
+          authCode: this.code
+          // authCode: '111111'
         }
         let url = '/appLogin.htm'
         let body = await request(url, 'post', data)
@@ -177,7 +177,7 @@ export default {
      *  登录是否高亮
     */
     checkLoginActive () {
-      if(this.phoneNumber && /^1[\d]{10}/.test(this.phoneNumber) && this.code && /^[\d]{6}/.test(this.code)){
+      if(this.phoneNumber && /^1[\d]{10}/.test(this.phoneNumber) && this.code && /^[\d]{4}/.test(this.code)){
         this.loginDisabled = false
       } else {
         this.loginDisabled = true

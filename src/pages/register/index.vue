@@ -89,10 +89,10 @@ export default {
       if (!this.loginDisabled) {
         let wxCode = wx.getStorageSync('wxCode')
         let data = {
-          telPhone: this.phoneNumber,
+          tellPhone: this.phoneNumber,
           wxCode, // code码
-          // code: this.code
-          code: '111111'
+          code: this.code
+          // code: '111111'
         }
         let url = '/register.htm'
         let body = await request(url, 'get', data)
@@ -120,7 +120,7 @@ export default {
      *  登录是否高亮
     */
     checkLoginActive () {
-      if(this.phoneNumber && /^1[\d]{10}/.test(this.phoneNumber) && this.code && /^[\d]{6}/.test(this.code)){
+      if(this.phoneNumber && /^1[\d]{10}/.test(this.phoneNumber) && this.code && /^[\d]{4}/.test(this.code)){
         this.loginDisabled = false
       } else {
         this.loginDisabled = true
