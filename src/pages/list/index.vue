@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="sublist">
-      <div v-for="(subitem, subindex) in goodsList" :key="subindex" @click="jumpDetail" class="good-desc">
+      <div v-for="(subitem, subindex) in goodsList" :key="subindex" @click="jumpDetail(subitem)" class="good-desc" >
         <img :src="subitem.d_goods.goods_main_photo" class="good-img" alt="">
         <p class="ellipsis-two title">{{subitem.d_goods.goods_name}}</p>
         <div class="price">
@@ -104,6 +104,12 @@ export default {
         this.goodsList = body.data
         console.log(this.goodsList,'data')
       }
+    },
+    // 跳转到商品详情
+    jumpDetail(item) {
+      wx.navigateTo({
+        url: '/pages/good/main?id=' + item.id
+      })
     }
   }
 }
