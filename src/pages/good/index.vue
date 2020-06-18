@@ -149,6 +149,9 @@ mounted () {
   if (getQuery()['id']) {
     this.goodid = getQuery()['id']
   }
+  // 重置-避免有些对象有值，有些对象没值，没值的地方被有值的覆盖，也变成了有值
+  this.goods_specs = []
+  // console.log(this.goods_specs,'111')
   // 获取商品详情数据
   this.getDetail()
 },
@@ -181,9 +184,6 @@ methods: {
   },
   navigate(href, e) {
     // do something
-  },
-  aaa() {
-    console.log(111)
   },
   selectDesc(i,index,spec) {
     this.goods_specs[i].spec.properties.forEach(v=>{
