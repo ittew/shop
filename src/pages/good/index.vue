@@ -38,9 +38,9 @@
     <div class="shop_head" @click="goShopd">
       <img class="shop_img" src="/static/images/shopd.png" alt="">
       <div class="head_avatar">
-        <p class="head_t">戴尔自营专卖店</p>
+        <p class="head_t">{{storeInfo.store_name}}</p>
         <p class="head_f">商品数量：<span>4</span>件商品</p>
-        <p class="head_f">店铺收藏：<span>0</span>人收藏</p>
+        <p class="head_f">店铺收藏：<span>{{storeInfo.favorite_count}}</span>人收藏</p>
       </div>
       <div class="go_shop">进入 ></div>
     </div>
@@ -48,9 +48,11 @@
   <!-- 商品详情 -->
   <div class="detail-content grayLine">
     <p>商品详情</p>
-    <div class="detail" v-for="(v,i) in detailList" :key="i">
+    <!-- <div v-html="goodDetail"></div> -->
+    <wxParse :content="goodDetail" @preview="preview" @navigate="navigate" />
+    <!-- <div class="detail" v-for="(v,i) in detailList" :key="i">
       <img :src="v.list_pic_url">
-    </div>
+    </div> -->
   </div>
 
 
@@ -142,7 +144,9 @@ data() {
     goodsSpecifications: [],
     allnumber: 0,
     showpop: false,
-    number: 0
+    number: 0,
+    goodDetail: '', // 商品详情数据
+    storeInfo: {} // 店铺信息
   }
 },
 mounted () {
@@ -154,6 +158,7 @@ mounted () {
   // console.log(this.goods_specs,'111')
   // 获取商品详情数据
   this.getDetail()
+  this.getStoreDetail()
 },
 methods: {
   // 处理点击选中后规格
@@ -208,6 +213,8 @@ methods: {
       // console.log("this.attribute")
       // console.log(this.attribute)
       this.gallery = body.good.goods_photos
+      this.goodDetail = body.good.goods_details
+      console.log(this.goodDetail,'this.goodDetail')
       // console.log("this.gallery")
       // console.log(this.gallery)
       // this.attribute = body.good.goods_property
@@ -249,10 +256,10 @@ methods: {
         "deleteStatus": false
       }
     ]
-      console.log(this.goods_specs,'this.goods_specs1----')
+      // console.log(this.goods_specs,'this.goods_specs1----')
       this.handleSpec(this.goods_specs)
       this.getDefSpec(this.goods_specs)
-      console.log(this.goods_specs,'this.goods_specs2----')
+      // console.log(this.goods_specs,'this.goods_specs2----')
 
       // this.goodsSpecifications = JSON.parse(body.goodsSpecifications)
       // console.log(this.goods_specs,'this.goods_specs')
@@ -260,6 +267,19 @@ methods: {
       // console.log("this.attribute")
       // console.log(this.attribute)
     }
+  },
+  // 获取店铺详情数据
+  async getStoreDetail() {
+    let data = {
+      // 'id': this.goodid // id 商品对应的id  用于获取商品详情数据
+      'id': "32799" // id 商品对应的id  用于获取商品详情数据
+    }
+    let url = '/storeDetail.htm'
+    let body = await request(url, 'get', data)
+    // if (body.success) {
+      this.storeInfo = body
+      console.log(body,'getStoreDetail')
+    // }
   },
   // 立即购买-跳转到订单列表
   bug() {
